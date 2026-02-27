@@ -1,0 +1,83 @@
+'use server'
+
+import { createClient } from '@/lib/supabase/server'
+import { revalidatePath } from 'next/cache'
+import type { BookingInput } from '@/lib/validations'
+
+export async function createBooking(data: BookingInput & { client_id: string }) {
+  const supabase = await createClient()
+
+  const depositAmount = data.total_amount * 0.3 // 30% deposit
+  const remainingAmount = data.total_amount - depositAmount
+  const platformFee = data.total_amount * 0.1 // 10% platform fee
+
+  const { data: booking, error } = await supabase
+    .from('bookings')
+    .insert({
+      ...data,
+      deposit_amount: depositAmount,
+      remaining_amount: remainingAmount,
+      platform_fee: platformFee,
+    } as any)
+    .select()
+    .single()
+
+  if (error) {
+    return { error: error.message }
+  }
+
+  revalidatePath('/client/bookings')
+  return { data: booking }
+}
+
+export async function getBookings(filters?: {
+  client_id?: string
+  provider_id?: string
+  status?: string
+}) {
+  const supabase = await createClient()
+
+  let query = supabase
+    .from('bookings')
+    .select('*, client:profiles!client_id(*), provider:profiles!provider_id(*), project:projects(*)')
+
+  if (filters?.client_id) {
+    query = query.eq('client_id', filters.client_id)
+  }
+  if (filters?.provider_id) {
+    query = query.eq('provider_id', filters.provider_id)
+  }
+  if (filters?.status) {
+    query = query.eq('status', filters.status)
+  }
+
+  const { data, error } = await query.order('created_at', { ascending: false })
+
+  if (error) {
+    return { error: error.message }
+  }
+
+  return { data }
+}
+
+export async function updateBookingStatus(
+  id: string,
+  status: 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'disputed' | 'cancelled'
+) {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase
+    .from('bookings')
+    .update({ status })
+    .eq('id', id)
+    .select()
+    .single()
+
+  if (error) {
+    return { error: error.message }
+  }
+
+  revalidatePath('/client/bookings')
+  revalidatePath('/provider/dashboard')
+  return { data }
+}
