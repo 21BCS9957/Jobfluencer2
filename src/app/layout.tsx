@@ -16,6 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Job Fluencer - Creative Talent Marketplace",
   description: "Connect with India's best creative professionals - photographers, videographers, editors, and influencers",
+  viewport: { width: "device-width", initialScale: 1, maximumScale: 5 },
 };
 
 export default function RootLayout({

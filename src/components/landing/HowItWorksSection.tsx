@@ -171,14 +171,14 @@ export function HowItWorksSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-[var(--brand-bg-base)] py-16 sm:py-20 lg:py-24 overflow-hidden"
+      className="relative w-full bg-[var(--brand-bg-base)] py-10 sm:py-16 md:py-20 lg:py-24 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 lg:px-16">
         {/* Header */}
-        <div className="text-center mb-12 sm:mb-16">
+        <div className="text-center mb-8 sm:mb-12 md:mb-16">
           <h2
             ref={headingRef}
-            className="text-2xl sm:text-3xl md:text-4xl font-normal leading-tight tracking-wide overflow-hidden"
+            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal leading-tight tracking-wide overflow-hidden px-1"
             style={{ fontFamily: 'Georgia, serif' }}
           >
             <span className="inline-block">
@@ -264,15 +264,15 @@ export function HowItWorksSection() {
           </h2>
           <p
             ref={subtextRef}
-            className="mt-4 text-base sm:text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto leading-relaxed"
+            className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto leading-relaxed px-1"
           >
             Job Fluencer helps you manage discovery, deal closure, protected payments, and
             project communication in one place.
           </p>
         </div>
 
-        {/* Frame Gallery - Masonry Style */}
-        <div className="grid grid-cols-12 gap-3 sm:gap-4 auto-rows-[180px] sm:auto-rows-[220px]">
+        {/* Frame Gallery - Masonry Style; shorter rows on mobile */}
+        <div className="grid grid-cols-12 gap-2 sm:gap-3 md:gap-4 auto-rows-[140px] sm:auto-rows-[180px] md:auto-rows-[220px]">
           {/* Frame 1 - Large */}
           <div
             ref={(el) => {
@@ -455,7 +455,7 @@ export function HowItWorksSection() {
         </div>
 
         {/* Bottom features */}
-        <div className="mt-12 sm:mt-16 flex flex-wrap items-center justify-center gap-6 sm:gap-8">
+        <div className="mt-8 sm:mt-12 md:mt-16 flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8">
           <div
             ref={(el) => {
               bulletsRef.current[0] = el

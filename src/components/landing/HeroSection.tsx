@@ -31,7 +31,7 @@ const WORKFLOW_STEPS = [
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen w-full overflow-hidden flex flex-col bg-black">
+    <section className="relative min-h-[100dvh] min-h-screen w-full overflow-x-hidden flex flex-col bg-black">
       {/* Background: video at z-0, overlay at z-[1] (left-to-right gradient for readability) */}
       <HeroVideo />
       <div
@@ -40,33 +40,30 @@ export function HeroSection() {
       />
 
       {/* Foreground */}
-      <div className="relative z-10 flex flex-col min-h-screen">
-        <div className="pt-4 px-4 sm:px-6">
+      <div className="relative z-10 flex flex-col min-h-[100dvh] min-h-screen">
+        <div className="pt-3 pt-[env(safe-area-inset-top)] px-3 sm:pt-4 sm:px-6">
           <Navbar variant="floating" />
         </div>
 
-        <div className="flex-1 flex flex-col items-start justify-center px-6 sm:px-10 md:px-14 lg:px-20 pb-8 pt-4">
+        <div className="flex-1 flex flex-col items-start justify-center px-4 sm:px-10 md:px-14 lg:px-20 pb-6 pb-[env(safe-area-inset-bottom)] sm:pb-8 pt-2 sm:pt-4">
           {/* Hero content – no glass box, direct on background */}
-          <div className="w-full max-w-3xl flex flex-col items-start gap-8 sm:gap-10">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-white text-left">
+          <div className="w-full max-w-3xl flex flex-col items-start gap-5 sm:gap-8 md:gap-10">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.12] tracking-tight text-white text-left">
               Connect brands with{' '}
               <span className="text-[var(--hero-accent)]">creative talent</span>
             </h1>
-            <p
-              className="text-[#d1d1d1] text-lg sm:text-xl max-w-[520px] text-left leading-relaxed"
-              style={{ maxWidth: '520px' }}
-            >
+            <p className="text-[#d1d1d1] text-base sm:text-lg md:text-xl max-w-full sm:max-w-[520px] text-left leading-relaxed">
               Find the best photographers, videographers, and content creators for your next campaign. One platform, endless possibilities.
             </p>
 
             {/* Decorative search showcase – not functional, visual only */}
             <HeroSearchShowcase />
 
-            {/* CTAs – clear hierarchy, subtle hover */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+            {/* CTAs – touch-friendly min height, full width on mobile */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-1 sm:pt-2 w-full sm:w-auto">
               <Link
-                href="/auth/register"
-                className="brand-gradient inline-flex items-center justify-center rounded-full px-8 py-4 text-base font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 motion-reduce:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent hover:shadow-[0_0_32px_rgba(145,47,86,0.45)]"
+                href="/post-project"
+                className="brand-gradient inline-flex items-center justify-center rounded-full px-6 py-3.5 min-h-[48px] sm:min-h-0 sm:px-8 sm:py-4 text-base font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 motion-reduce:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent hover:shadow-[0_0_32px_rgba(145,47,86,0.45)] active:scale-[0.98]"
                 style={{
                   boxShadow: '0 0 24px rgba(145, 47, 86, 0.35)',
                 }}
@@ -77,20 +74,20 @@ export function HeroSection() {
                   e.currentTarget.style.boxShadow = '0 0 24px rgba(145, 47, 86, 0.35)'
                 }}
               >
-                Get Started
+                Create Campaign
               </Link>
               <Link
                 href="/browse"
-                className="inline-flex items-center justify-center rounded-full px-8 py-4 text-base font-semibold text-white border-2 border-white/30 bg-white/5 backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 motion-reduce:hover:translate-y-0 hover:bg-white/10 hover:border-white/50 hover:shadow-[0_0_20px_rgba(255,255,255,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+                className="inline-flex items-center justify-center rounded-full px-6 py-3.5 min-h-[48px] sm:min-h-0 sm:px-8 sm:py-4 text-base font-semibold text-white border-2 border-white/30 bg-white/5 backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 motion-reduce:hover:translate-y-0 hover:bg-white/10 hover:border-white/50 hover:shadow-[0_0_20px_rgba(255,255,255,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent active:scale-[0.98]"
               >
                 Browse Talent
               </Link>
             </div>
           </div>
 
-          {/* Workflow card – glass only here and in navbar */}
-          <div className="glass-workflow w-full max-w-4xl mt-12 sm:mt-16 p-4 sm:p-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Workflow card – glass only here and in navbar; tighter on mobile */}
+          <div className="glass-workflow w-full max-w-4xl mt-8 sm:mt-12 md:mt-16 p-3 sm:p-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               {WORKFLOW_STEPS.map((step) => (
                 <div
                   key={step.title}

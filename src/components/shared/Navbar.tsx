@@ -44,12 +44,12 @@ export function Navbar({ variant = 'default' }: { variant?: NavbarVariant }) {
   ]
 
   const navWrapperClass = isFloating
-    ? 'sticky top-0 z-50 max-w-4xl mx-auto rounded-full bg-white/12 backdrop-blur-[12px] border border-white/10 px-4 sm:px-6'
+    ? 'sticky top-0 z-50 max-w-4xl mx-auto rounded-full bg-white/12 backdrop-blur-[12px] border border-white/10 px-3 sm:px-6 mx-3 sm:mx-auto'
     : 'sticky top-0 z-50 bg-[var(--brand-bg-base)]/95 backdrop-blur-md border-b border-[var(--border)]'
 
   const innerClass = isFloating
-    ? 'flex items-center justify-between h-14'
-    : 'flex items-center justify-between h-16'
+    ? 'flex items-center justify-between h-12 sm:h-14'
+    : 'flex items-center justify-between h-14 sm:h-16'
 
   return (
     <nav className={navWrapperClass}>
@@ -152,16 +152,17 @@ export function Navbar({ variant = 'default' }: { variant?: NavbarVariant }) {
           {/* Mobile Menu - only render after mount */}
           {mounted && (
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-              <SheetTrigger asChild className="md:hidden">
+              <SheetTrigger asChild className="md:hidden min-h-[44px] min-w-[44px] -mr-1 flex items-center justify-center">
                 <Button
                   variant="ghost"
                   size="icon"
-                  className={isFloating ? 'text-white hover:bg-white/10' : ''}
+                  className={isFloating ? 'text-white hover:bg-white/10 touch-manipulation' : 'touch-manipulation'}
+                  aria-label="Open menu"
                 >
                   <Menu className="w-6 h-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-80">
+              <SheetContent side="right" className="w-[min(320px,85vw)] sm:w-80 pt-[env(safe-area-inset-top)]">
                 <div className="flex flex-col gap-6 mt-8">
                   {navLinks.map((link) => (
                     <Link
