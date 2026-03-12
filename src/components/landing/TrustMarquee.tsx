@@ -28,7 +28,7 @@ function Badge({ text, iconIndex }: { text: string; iconIndex: number }) {
   const Icon = ICONS[iconIndex % ICONS.length]
   return (
     <span
-      className="trust-marquee-badge flex items-center gap-2 flex-shrink-0 px-5 py-2.5 rounded-full text-sm font-medium text-[var(--brand-text)]"
+      className="trust-marquee-badge flex items-center gap-1.5 sm:gap-2 flex-shrink-0 px-3 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium text-[var(--brand-text)]"
       style={{
         background: 'rgba(234, 242, 239, 0.85)',
         backdropFilter: 'blur(10px)',
@@ -44,7 +44,7 @@ function Badge({ text, iconIndex }: { text: string; iconIndex: number }) {
 
 function BadgeList() {
   return (
-    <div className="flex items-center gap-6 flex-shrink-0 pr-6">
+    <div className="flex items-center gap-4 sm:gap-6 flex-shrink-0 pr-4 sm:pr-6">
       {BADGES.map((text, i) => (
         <Badge key={`${text}-${i}`} text={text} iconIndex={i} />
       ))}
@@ -61,8 +61,8 @@ export function TrustMarquee() {
       }}
       aria-label="Platform trust highlights"
     >
-      <div className="py-6 sm:py-8">
-        <div className="overflow-hidden">
+      <div className="py-4 sm:py-6 md:py-8">
+        <div className="overflow-hidden -mx-2 sm:mx-0">
           <div className="trust-marquee-track flex w-max will-change-transform">
             <BadgeList />
             <BadgeList />

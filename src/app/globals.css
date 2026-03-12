@@ -320,3 +320,26 @@
     transform: none;
   }
 }
+
+/* Layered text: mobile-first responsive font and row height */
+.layered-text-responsive {
+  font-size: var(--layered-font-size-md);
+  --layered-line-height: var(--layered-line-height-md);
+}
+@media (min-width: 768px) {
+  .layered-text-responsive {
+    font-size: var(--layered-font-size);
+    --layered-line-height: var(--layered-line-height-desktop);
+  }
+}
+
+/* Mobile layout: prevent horizontal overflow, improve touch */
+@layer base {
+  html {
+    overflow-x: hidden;
+  }
+  body {
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+}

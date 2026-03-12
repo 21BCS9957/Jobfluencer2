@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Briefcase, Camera, Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
@@ -15,7 +15,12 @@ import { register as registerAction } from '@/actions/auth.actions'
 
 export default function RegisterPage() {
   const router = useRouter()
-  const [selectedRole, setSelectedRole] = useState<'client' | 'provider' | null>(null)
+  const searchParams = useSearchParams()
+  const callback = searchParams.get('callback')
+  
+  const [selectedRole, setSelectedRole] = useState<'client' | 'provider' | null>(
+    callback ? 'client' : null // Auto-select client if coming from campaign wizard
+  )
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
@@ -43,7 +48,12 @@ export default function RegisterPage() {
       setError(result.error)
       setIsLoading(false)
     } else {
-      setSuccess(true)
+      // If there's a callback, redirect there after registration
+      if (callback) {
+        router.push(callback)
+      } else {
+        setSuccess(true)
+      }
     }
   }
 
@@ -56,7 +66,7 @@ export default function RegisterPage() {
           </svg>
         </div>
         <h2 className="text-2xl font-bold mb-2">Check Your Email</h2>
-        <p className="text-[var(--muted-foreground)] mb-6">
+        <p className="text-gray-600 mb-6">
           We've sent you a verification link. Please check your email to verify your account.
         </p>
         <Link href="/auth/login">
@@ -66,24 +76,24 @@ export default function RegisterPage() {
     )
   }
 
-  if (!selectedRole) {
+  if (!selectedRole && !callback) {
     return (
       <div>
         <h2 className="text-2xl font-bold text-center mb-2">Join Job Fluencer</h2>
-        <p className="text-[var(--muted-foreground)] text-center mb-8">Choose how you want to use the platform</p>
+        <p className="text-gray-600 text-center mb-8">Choose how you want to use the platform</p>
         
         <div className="grid gap-4">
           <Card
-            className="p-6 cursor-pointer hover:border-[var(--brand-primary)] hover:shadow-lg transition-all"
+            className="p-6 cursor-pointer hover:border-orange-500 hover:shadow-lg transition-all"
             onClick={() => setSelectedRole('client')}
           >
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-[var(--accent)] rounded-lg flex items-center justify-center flex-shrink-0">
-                <Briefcase className="w-6 h-6 text-[var(--brand-primary)]" />
+              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Briefcase className="w-6 h-6 text-orange-600" />
               </div>
               <div>
                 <h3 className="font-semibold text-lg mb-1">I want to hire</h3>
-                <p className="text-[var(--muted-foreground)] text-sm">
+                <p className="text-gray-600 text-sm">
                   Post projects and connect with talented creatives
                 </p>
               </div>
@@ -91,16 +101,16 @@ export default function RegisterPage() {
           </Card>
 
           <Card
-            className="p-6 cursor-pointer hover:border-[var(--brand-primary)] hover:shadow-lg transition-all"
+            className="p-6 cursor-pointer hover:border-orange-500 hover:shadow-lg transition-all"
             onClick={() => setSelectedRole('provider')}
           >
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-[var(--accent)] rounded-lg flex items-center justify-center flex-shrink-0">
-                <Camera className="w-6 h-6 text-[var(--brand-secondary)]" />
+              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Camera className="w-6 h-6 text-purple-600" />
               </div>
               <div>
                 <h3 className="font-semibold text-lg mb-1">I'm a Creative</h3>
-                <p className="text-[var(--muted-foreground)] text-sm">
+                <p className="text-gray-600 text-sm">
                   Showcase your work and get hired for projects
                 </p>
               </div>
@@ -108,9 +118,9 @@ export default function RegisterPage() {
           </Card>
         </div>
 
-        <p className="text-center text-sm text-[var(--muted-foreground)] mt-6">
+        <p className="text-center text-sm text-gray-600 mt-6">
           Already have an account?{' '}
-          <Link href="/auth/login" className="text-[var(--brand-primary)] hover:underline font-medium">
+          <Link href="/auth/login" className="text-orange-600 hover:underline font-medium">
             Sign in
           </Link>
         </p>
@@ -120,16 +130,23 @@ export default function RegisterPage() {
 
   return (
     <Card className="p-8">
-      <button
-        onClick={() => setSelectedRole(null)}
-        className="text-sm text-[var(--muted-foreground)] hover:text-[var(--brand-text)] mb-4"
-      >
-        ← Change role
-      </button>
+      {!callback && (
+        <button
+          onClick={() => setSelectedRole(null)}
+          className="text-sm text-gray-600 hover:text-gray-900 mb-4"
+        >
+          ← Change role
+        </button>
+      )}
 
-      <h2 className="text-2xl font-bold mb-6">
-        Create your {selectedRole === 'client' ? 'Client' : 'Creative'} account
+      <h2 className="text-2xl font-bold mb-2">
+        {callback ? 'Create your account to publish' : `Create your ${selectedRole === 'client' ? 'Client' : 'Creative'} account`}
       </h2>
+      {callback && (
+        <p className="text-gray-600 mb-6">
+          You're almost done! Create an account to publish your campaign.
+        </p>
+      )}
 
       {error && (
         <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm">
@@ -182,15 +199,20 @@ export default function RegisterPage() {
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               Creating account...
             </>
+          ) : callback ? (
+            'Create Account & Publish'
           ) : (
             'Create Account'
           )}
         </Button>
       </form>
 
-      <p className="text-center text-sm text-[var(--muted-foreground)] mt-6">
+      <p className="text-center text-sm text-gray-600 mt-6">
         Already have an account?{' '}
-        <Link href="/auth/login" className="text-[var(--brand-primary)] hover:underline font-medium">
+        <Link 
+          href={callback ? `/auth/login?callback=${callback}` : '/auth/login'} 
+          className="text-orange-600 hover:underline font-medium"
+        >
           Sign in
         </Link>
       </p>

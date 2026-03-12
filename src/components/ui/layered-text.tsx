@@ -33,8 +33,8 @@ export function LayeredText({
   const timelineRef = useRef<gsap.core.Timeline>()
 
   const calculateTranslateX = (index: number) => {
-    const baseOffset = 35
-    const baseOffsetMd = 20
+    const baseOffset = 25
+    const baseOffsetMd = 15
     const centerIndex = Math.floor(lines.length / 2)
     return {
       desktop: (index - centerIndex) * baseOffset,
@@ -55,10 +55,10 @@ export function LayeredText({
     })
 
     timelineRef.current.to(paragraphs, {
-      y: window.innerWidth >= 768 ? -60 : -35,
-      duration: 1.2,
+      y: window.innerWidth >= 768 ? -70 : -40,
+      duration: 1.5,
       ease: "power2.inOut",
-      stagger: 0.08,
+      stagger: 0.1,
     })
 
     return () => {
@@ -69,49 +69,36 @@ export function LayeredText({
   return (
     <div
       ref={containerRef}
-      className={`mx-auto py-24 font-sans font-black tracking-[-2px] uppercase text-black dark:text-white antialiased ${className}`}
-      style={{ fontSize, "--md-font-size": fontSizeMd } as React.CSSProperties}
+      className={`layered-text-responsive mx-auto py-8 sm:py-12 md:py-16 font-sans font-black tracking-[-2px] uppercase text-black dark:text-white antialiased ${className}`}
+      style={
+        {
+          "--layered-font-size": fontSize,
+          "--layered-font-size-md": fontSizeMd,
+          "--layered-line-height-desktop": `${lineHeight}px`,
+          "--layered-line-height": `${lineHeightMd}px`,
+          "--layered-line-height-md": `${lineHeightMd}px`,
+        } as React.CSSProperties
+      }
     >
-      <ul className="list-none p-0 m-0 flex flex-col items-center">
+      <ul className="list-none p-0 m-0 flex flex-col items-center layered-text-list gap-2 sm:gap-3">
         {lines.map((line, index) => {
           const translateX = calculateTranslateX(index)
           return (
             <li
               key={index}
-              className={`overflow-hidden relative ${
-                index % 2 === 0
-                  ? "[transform:skew(60deg,-30deg)_scaleY(0.66667)]"
-                  : "[transform:skew(0deg,-30deg)_scaleY(1.33333)]"
-              }`}
+              className="relative layered-text-li overflow-hidden"
               style={
                 {
-                  height: `${lineHeight}px`,
+                  height: "var(--layered-line-height)",
                   transform: `translateX(${translateX.desktop}px) skew(${index % 2 === 0 ? "60deg, -30deg" : "0deg, -30deg"}) scaleY(${index % 2 === 0 ? "0.66667" : "1.33333"})`,
-                  "--md-height": `${lineHeightMd}px`,
                   "--md-translateX": `${translateX.mobile}px`,
                 } as React.CSSProperties
               }
             >
-              <p
-                className="leading-[55px] md:leading-[30px] px-[15px] align-top whitespace-nowrap m-0"
-                style={
-                  {
-                    height: `${lineHeight}px`,
-                    lineHeight: `${lineHeight - 5}px`,
-                  } as React.CSSProperties
-                }
-              >
+              <p className="layered-text-p leading-[55px] md:leading-[30px] px-2 sm:px-[15px] align-top whitespace-nowrap m-0" style={{ height: "var(--layered-line-height)", lineHeight: "calc(var(--layered-line-height) - 5px)" } as React.CSSProperties}>
                 {line.top}
               </p>
-              <p
-                className="leading-[55px] md:leading-[30px] px-[15px] align-top whitespace-nowrap m-0"
-                style={
-                  {
-                    height: `${lineHeight}px`,
-                    lineHeight: `${lineHeight - 5}px`,
-                  } as React.CSSProperties
-                }
-              >
+              <p className="layered-text-p leading-[55px] md:leading-[30px] px-2 sm:px-[15px] align-top whitespace-nowrap m-0" style={{ height: "var(--layered-line-height)", lineHeight: "calc(var(--layered-line-height) - 5px)" } as React.CSSProperties}>
                 {line.bottom}
               </p>
             </li>
