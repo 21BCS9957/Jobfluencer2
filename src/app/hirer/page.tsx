@@ -8,6 +8,7 @@ import { AnimatedButton } from '@/components/dashboard/AnimatedButton'
 import { EnhancedStatCard } from '@/components/dashboard/EnhancedStatCard'
 import { Megaphone, Target, Users, LineChart, Plus, Filter } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { HeroVideo } from '@/components/landing/HeroVideo'
 
 const campaignStats = [
   { label: 'Total Ad Spend', value: 185000, prefix: '₹', icon: LineChart, color: 'from-emerald-400 to-teal-500' },
@@ -77,15 +78,15 @@ const pipeline = [
   { creator: 'FitWithKabir', platform: 'Instagram', stage: 'Live this week', fee: '₹55,000' },
 ]
 
-export default function ClientDashboardPage() {
+export default function HirerDashboardPage() {
   return (
     <div className="min-h-screen bg-[#361F27] text-white">
       <Navigation />
 
       <main className="pt-20 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         {/* Hero + stats */}
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
-          <div className="lg:col-span-2 space-y-6">
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+          <div className="lg:col-span-2 flex flex-col gap-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -102,23 +103,31 @@ export default function ClientDashboardPage() {
                 all in the same Job Fluencer workspace your creators already use.
               </p>
             </motion.div>
-
-            <GlassCard className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-pink-100/80 mb-1">
-                  QUICK ACTION
-                </p>
-                <p className="text-lg font-semibold mb-2">Create a new campaign</p>
-                <p className="text-sm text-pink-100/80 max-w-md">
-                  Start with a ready-made workflow – we auto-structure the brief, deliverables,
-                  and payment milestones for you.
-                </p>
+            <div className="relative flex-1 overflow-hidden rounded-xl border border-white/15 bg-black/40">
+              <HeroVideo />
+              <div
+                className="absolute inset-0 bg-gradient-to-br from-[#361F27]/92 via-[#361F27]/75 to-[#361F27]/92"
+                aria-hidden
+              />
+              <div className="relative z-10 flex min-h-[260px] sm:min-h-[340px] flex-col justify-between gap-10 p-8 sm:p-10">
+                <div className="space-y-4 max-w-xl pt-2 sm:pt-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-pink-100/80">
+                    QUICK ACTION
+                  </p>
+                  <p className="text-xl font-semibold">Create a new campaign</p>
+                  <p className="text-sm text-pink-100/80 max-w-md leading-relaxed">
+                    Start with a ready-made workflow – we auto-structure the brief, deliverables,
+                    and payment milestones for you.
+                  </p>
+                </div>
+                <div className="flex justify-start pb-2">
+                  <AnimatedButton variant="primary" className="whitespace-nowrap">
+                    <Plus className="w-4 h-4 mr-2 inline-block align-middle" />
+                    <span className="align-middle">New campaign</span>
+                  </AnimatedButton>
+                </div>
               </div>
-              <AnimatedButton variant="primary" className="whitespace-nowrap">
-                <Plus className="w-4 h-4 mr-2 inline-block align-middle" />
-                <span className="align-middle">New campaign</span>
-              </AnimatedButton>
-            </GlassCard>
+            </div>
           </div>
 
           <div className="space-y-4">
