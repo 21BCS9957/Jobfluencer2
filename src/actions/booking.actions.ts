@@ -3,6 +3,9 @@
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import type { BookingInput } from '@/lib/validations'
+import type { Database } from '@/lib/types/database'
+
+type BookingStatus = Database['public']['Tables']['bookings']['Row']['status']
 
 export async function createBooking(data: BookingInput & { client_id: string }) {
   const supabase = await createClient()
@@ -62,13 +65,13 @@ export async function getBookings(filters?: {
 
 export async function updateBookingStatus(
   id: string,
-  status: 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'disputed' | 'cancelled'
+  status: BookingStatus
 ) {
   const supabase = await createClient()
 
   const { data, error } = await supabase
     .from('bookings')
-    .update({ status })
+    .update({ status } as Database['public']['Tables']['bookings']['Update'])
     .eq('id', id)
     .select()
     .single()
