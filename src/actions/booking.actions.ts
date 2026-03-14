@@ -69,9 +69,13 @@ export async function updateBookingStatus(
 ) {
   const supabase = await createClient()
 
+  const updateData: Partial<Database['public']['Tables']['bookings']['Row']> = {
+    status
+  }
+
   const { data, error } = await supabase
     .from('bookings')
-    .update({ status } as Database['public']['Tables']['bookings']['Update'])
+    .update(updateData)
     .eq('id', id)
     .select()
     .single()
