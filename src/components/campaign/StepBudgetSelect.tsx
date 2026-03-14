@@ -1,9 +1,10 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { GlassCard } from '../dashboard/GlassCard'
+import { Sparkles, CheckCircle2 } from 'lucide-react'
 
 interface StepBudgetSelectProps {
   selectedBudget: string
@@ -29,75 +30,77 @@ export function StepBudgetSelect({
 }: StepBudgetSelectProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.4 }}
       className="max-w-3xl mx-auto"
     >
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold mb-3">What's your budget?</h2>
-        <p className="text-gray-600">
-          Select a budget range for this project
-        </p>
-      </div>
-
-      <Card className="p-8 mb-8">
-        <Label className="text-lg font-semibold mb-4 block">
-          Select Budget Range *
-        </Label>
-        
-        <div className="space-y-3">
-          {budgetRanges.map((budget) => (
-            <Card
-              key={budget.value}
-              className={cn(
-                'p-4 cursor-pointer transition-all hover:shadow-md',
-                selectedBudget === budget.value
-                  ? 'border-orange-500 bg-orange-50 border-2'
-                  : 'border-gray-200 hover:border-orange-300'
-              )}
-              onClick={() => onBudgetChange(budget.value)}
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-semibold text-lg">{budget.label}</p>
-                  <p className="text-sm text-gray-600">{budget.description}</p>
-                </div>
-                {selectedBudget === budget.value && (
-                  <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center">
-                    <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                )}
-              </div>
-            </Card>
-          ))}
-        </div>
-
-        <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-          <p className="text-sm text-blue-900">
-            💡 <strong>Tip:</strong> Projects with clear budgets receive 3x more quality proposals
+      <GlassCard className="p-8">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-bold mb-3 text-white">What's your budget?</h2>
+          <p className="text-zinc-500 text-sm">
+            Select a budget range for this project
           </p>
         </div>
-      </Card>
 
-      <div className="flex gap-4">
-        <Button onClick={onBack} variant="outline" className="flex-1">
-          Back
-        </Button>
-        <Button
-          onClick={onNext}
-          disabled={!selectedBudget}
-          className="flex-1 bg-orange-500 hover:bg-orange-600"
-        >
-          Generate Campaign
-        </Button>
-      </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+          {budgetRanges.map((budget) => {
+            const isActive = selectedBudget === budget.value
+            return (
+              <motion.div
+                key={budget.value}
+                whileHover={{ y: -4 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => onBudgetChange(budget.value)}
+                className={cn(
+                  "relative p-5 rounded-2xl cursor-pointer transition-all duration-300 border backdrop-blur-md group",
+                  isActive
+                    ? "bg-indigo-500/10 border-indigo-500/50 shadow-[0_0_20px_rgba(99,102,241,0.15)]"
+                    : "bg-white/[0.02] border-white/[0.08] hover:border-white/[0.2] hover:bg-white/[0.04]"
+                )}
+              >
+                <div className="flex flex-col h-full">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className={cn(
+                      "text-lg font-bold transition-colors",
+                      isActive ? "text-indigo-400" : "text-white"
+                    )}>
+                      {budget.label}
+                    </span>
+                    {isActive && (
+                      <CheckCircle2 className="w-5 h-5 text-indigo-400" />
+                    )}
+                  </div>
+                  <p className="text-xs text-zinc-500 group-hover:text-zinc-400 transition-colors">
+                    {budget.description}
+                  </p>
+                </div>
+              </motion.div>
+            )
+          })}
+        </div>
+
+        <div className="p-4 bg-indigo-500/[0.05] border border-indigo-500/20 rounded-xl mb-10 flex items-start gap-3">
+          <Sparkles className="w-5 h-5 text-indigo-400 shrink-0 mt-0.5" />
+          <p className="text-sm text-zinc-400 italic">
+            <strong>Pro Tip:</strong> Projects with clear, realistic budgets receive 3x more quality proposals from top-rated creatives.
+          </p>
+        </div>
+
+        <div className="flex gap-4">
+          <Button onClick={onBack} variant="ghost" className="flex-1 h-12 text-zinc-400 hover:text-white hover:bg-white/5 rounded-xl transition-all">
+            Back
+          </Button>
+          <Button
+            onClick={onNext}
+            disabled={!selectedBudget}
+            className="flex-1 h-12 bg-white text-black hover:bg-zinc-200 rounded-xl font-bold transition-all disabled:opacity-50 disabled:grayscale"
+          >
+            Generate Campaign
+          </Button>
+        </div>
+      </GlassCard>
     </motion.div>
   )
-}
-
-function Label({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <label className={className}>{children}</label>
 }

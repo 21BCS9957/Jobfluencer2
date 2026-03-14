@@ -1,6 +1,7 @@
 'use client'
 
 import { Check } from 'lucide-react'
+import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
 interface StepIndicatorProps {
@@ -17,48 +18,48 @@ const steps = [
 
 export function StepIndicator({ currentStep }: StepIndicatorProps) {
   return (
-    <div className="w-full max-w-3xl mx-auto mb-8">
-      <div className="flex items-center justify-between">
-        {steps.map((step, index) => (
-          <div key={step.number} className="flex items-center flex-1">
-            <div className="flex flex-col items-center flex-1">
-              <div
+    <div className="w-full max-w-2xl mx-auto">
+      <div className="flex items-center justify-between relative">
+        {/* Background line */}
+        <div className="absolute top-5 left-0 right-0 h-[1px] bg-white/[0.05] -z-10" />
+        
+        {steps.map((step, index) => {
+          const isCompleted = currentStep > step.number
+          const isActive = currentStep === step.number
+
+          return (
+            <div key={step.number} className="flex flex-col items-center relative z-10">
+              <motion.div
+                initial={false}
+                animate={{
+                  backgroundColor: isCompleted || isActive ? 'rgb(99 102 241)' : 'rgb(24 24 27)',
+                  scale: isActive ? 1.1 : 1,
+                }}
                 className={cn(
-                  'w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all duration-300',
-                  currentStep > step.number
-                    ? 'bg-green-500 text-white'
-                    : currentStep === step.number
-                    ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/50'
-                    : 'bg-gray-200 text-gray-500'
+                  'w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-500 border',
+                  isCompleted || isActive
+                    ? 'border-indigo-400 shadow-[0_0_15px_rgba(99,102,241,0.4)] text-white'
+                    : 'border-white/[0.08] text-zinc-500 bg-zinc-900'
                 )}
               >
-                {currentStep > step.number ? (
-                  <Check className="w-5 h-5" />
+                {isCompleted ? (
+                  <Check className="w-5 h-5 text-white" />
                 ) : (
                   step.number + 1
                 )}
-              </div>
+              </motion.div>
+              
               <span
                 className={cn(
-                  'text-xs mt-2 hidden sm:block transition-colors',
-                  currentStep >= step.number
-                    ? 'text-gray-900 font-medium'
-                    : 'text-gray-400'
+                  'text-[10px] sm:text-xs mt-3 tracking-widest uppercase font-semibold transition-colors duration-500',
+                  isActive ? 'text-indigo-400' : isCompleted ? 'text-zinc-300' : 'text-zinc-600'
                 )}
               >
                 {step.label}
               </span>
             </div>
-            {index < steps.length - 1 && (
-              <div
-                className={cn(
-                  'h-0.5 flex-1 transition-colors duration-300',
-                  currentStep > step.number ? 'bg-green-500' : 'bg-gray-200'
-                )}
-              />
-            )}
-          </div>
-        ))}
+          )
+        })}
       </div>
     </div>
   )

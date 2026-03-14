@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { AnimatePresence } from 'framer-motion'
-import { ArrowLeft, Loader2, Sparkles } from 'lucide-react'
+import Link from 'next/link'
+import { ArrowLeft, Loader2, Sparkles, Zap } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { StepIndicator } from '@/components/campaign/StepIndicator'
 import { StepRole } from '@/components/campaign/StepRole'
@@ -184,38 +185,67 @@ export default function PostProjectPage() {
 
   if (isGenerating) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-slate-50 flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="w-16 h-16 text-orange-500 animate-spin mx-auto mb-4" />
-          <h2 className="text-2xl font-bold mb-2 flex items-center gap-2 justify-center">
-            <Sparkles className="w-6 h-6" />
-            AI is creating your campaign...
-          </h2>
-          <p className="text-gray-600">
-            Generating title, description, and tags based on your inputs
-          </p>
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-slate-50 flex flex-col">
+        <div className="absolute top-6 left-6">
+          <Link href="/" className="flex items-center gap-2 text-gray-900 hover:opacity-80 transition-opacity">
+            <Zap className="w-6 h-6" />
+            <span className="text-xl font-bold">Job Fluencer</span>
+          </Link>
+        </div>
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <Loader2 className="w-16 h-16 text-orange-500 animate-spin mx-auto mb-4" />
+            <h2 className="text-2xl font-bold mb-2 flex items-center gap-2 justify-center">
+              <Sparkles className="w-6 h-6" />
+              AI is creating your campaign...
+            </h2>
+            <p className="text-gray-600">
+              Generating title, description, and tags based on your inputs
+            </p>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-slate-50 py-8 px-4">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-black py-12 px-4 selection:bg-indigo-500/30">
+      <div className="max-w-4xl mx-auto">
         {currentStep < 4 && (
-          <>
-            {currentStep > 0 && (
-              <Button
-                variant="ghost"
-                onClick={() => setCurrentStep(currentStep - 1)}
-                className="mb-4"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back
-              </Button>
-            )}
+          <div className="mb-12">
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-4">
+                <Link href="/" className="flex items-center gap-2 shrink-0 text-white hover:opacity-90 transition-opacity">
+                  <Zap className="w-6 h-6" />
+                  <span className="text-xl font-bold">Job Fluencer</span>
+                </Link>
+                {currentStep > 0 && (
+                  <Button
+                    variant="ghost"
+                    onClick={() => setCurrentStep(currentStep - 1)}
+                    className="text-zinc-400 hover:text-white hover:bg-white/5"
+                  >
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                    Back
+                  </Button>
+                )}
+              </div>
+              <div className="flex items-center gap-2 px-3 py-1 bg-white/[0.03] border border-white/[0.08] rounded-full backdrop-blur-md">
+                <Sparkles className="w-4 h-4 text-indigo-400" />
+                <span className="text-xs font-medium text-zinc-400">AI Assisted Campaign</span>
+              </div>
+            </div>
             <StepIndicator currentStep={currentStep} totalSteps={4} />
-          </>
+          </div>
+        )}
+
+        {currentStep === 4 && (
+          <div className="mb-8">
+            <Link href="/" className="inline-flex items-center gap-2 text-white hover:opacity-90 transition-opacity">
+              <Zap className="w-6 h-6" />
+              <span className="text-xl font-bold">Job Fluencer</span>
+            </Link>
+          </div>
         )}
 
         <AnimatePresence mode="wait">

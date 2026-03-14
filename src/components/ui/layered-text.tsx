@@ -33,8 +33,8 @@ export function LayeredText({
   const timelineRef = useRef<gsap.core.Timeline>()
 
   const calculateTranslateX = (index: number) => {
-    const baseOffset = 25
-    const baseOffsetMd = 15
+    const baseOffset = 24
+    const baseOffsetMd = 14
     const centerIndex = Math.floor(lines.length / 2)
     return {
       desktop: (index - centerIndex) * baseOffset,
@@ -49,16 +49,16 @@ export function LayeredText({
     const paragraphs = container.querySelectorAll("p")
 
     // Create infinite loop animation
-    timelineRef.current = gsap.timeline({ 
+    timelineRef.current = gsap.timeline({
       repeat: -1, // Infinite repeat
       yoyo: true, // Reverse back and forth
     })
 
     timelineRef.current.to(paragraphs, {
-      y: window.innerWidth >= 768 ? -70 : -40,
-      duration: 1.5,
+      y: window.innerWidth >= 768 ? -48 : -28,
+      duration: 1.2,
       ease: "power2.inOut",
-      stagger: 0.1,
+      stagger: 0.08,
     })
 
     return () => {
@@ -69,36 +69,49 @@ export function LayeredText({
   return (
     <div
       ref={containerRef}
-      className={`layered-text-responsive mx-auto py-8 sm:py-12 md:py-16 font-sans font-black tracking-[-2px] uppercase text-black dark:text-white antialiased ${className}`}
-      style={
-        {
-          "--layered-font-size": fontSize,
-          "--layered-font-size-md": fontSizeMd,
-          "--layered-line-height-desktop": `${lineHeight}px`,
-          "--layered-line-height": `${lineHeightMd}px`,
-          "--layered-line-height-md": `${lineHeightMd}px`,
-        } as React.CSSProperties
-      }
+      className={`mx-auto py-12 font-sans font-black tracking-[-2px] uppercase text-black dark:text-white antialiased ${className}`}
+      style={{ fontSize, "--md-font-size": fontSizeMd } as React.CSSProperties}
     >
-      <ul className="list-none p-0 m-0 flex flex-col items-center layered-text-list gap-2 sm:gap-3">
+      <ul className="list-none p-0 m-0 flex flex-col items-center">
         {lines.map((line, index) => {
           const translateX = calculateTranslateX(index)
           return (
             <li
               key={index}
-              className="relative layered-text-li overflow-hidden"
+              className={`overflow-hidden relative ${
+                index % 2 === 0
+                  ? "[transform:skew(60deg,-30deg)_scaleY(0.66667)]"
+                  : "[transform:skew(0deg,-30deg)_scaleY(1.33333)]"
+              }`}
               style={
                 {
-                  height: "var(--layered-line-height)",
+                  height: `${lineHeight}px`,
                   transform: `translateX(${translateX.desktop}px) skew(${index % 2 === 0 ? "60deg, -30deg" : "0deg, -30deg"}) scaleY(${index % 2 === 0 ? "0.66667" : "1.33333"})`,
+                  "--md-height": `${lineHeightMd}px`,
                   "--md-translateX": `${translateX.mobile}px`,
                 } as React.CSSProperties
               }
             >
-              <p className="layered-text-p leading-[55px] md:leading-[30px] px-2 sm:px-[15px] align-top whitespace-nowrap m-0" style={{ height: "var(--layered-line-height)", lineHeight: "calc(var(--layered-line-height) - 5px)" } as React.CSSProperties}>
+              <p
+                className="leading-[55px] md:leading-[30px] px-[15px] align-top whitespace-nowrap m-0"
+                style={
+                  {
+                    height: `${lineHeight}px`,
+                    lineHeight: `${lineHeight - 5}px`,
+                  } as React.CSSProperties
+                }
+              >
                 {line.top}
               </p>
-              <p className="layered-text-p leading-[55px] md:leading-[30px] px-2 sm:px-[15px] align-top whitespace-nowrap m-0" style={{ height: "var(--layered-line-height)", lineHeight: "calc(var(--layered-line-height) - 5px)" } as React.CSSProperties}>
+              <p
+                className="leading-[55px] md:leading-[30px] px-[15px] align-top whitespace-nowrap m-0"
+                style={
+                  {
+                    height: `${lineHeight}px`,
+                    lineHeight: `${lineHeight - 5}px`,
+                  } as React.CSSProperties
+                }
+              >
                 {line.bottom}
               </p>
             </li>
