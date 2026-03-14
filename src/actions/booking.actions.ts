@@ -70,14 +70,9 @@ export async function updateBookingStatus(
 ) {
   const supabase = await createClient()
 
-  // Use the Update type which is what .update() expects
-  const updateData: BookingUpdate = {
-    status
-  }
-
   const { data, error } = await supabase
     .from('bookings')
-    .update(updateData)
+    .update({ status })
     .eq('id', id)
     .select()
     .single()
