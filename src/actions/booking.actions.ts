@@ -6,6 +6,7 @@ import type { BookingInput } from '@/lib/validations'
 import type { Database } from '@/lib/types/database'
 
 type BookingStatus = Database['public']['Tables']['bookings']['Row']['status']
+type BookingInsert = Database['public']['Tables']['bookings']['Insert']
 type BookingUpdate = Database['public']['Tables']['bookings']['Update']
 
 export async function createBooking(data: BookingInput & { client_id: string }) {
@@ -15,14 +16,23 @@ export async function createBooking(data: BookingInput & { client_id: string }) 
   const remainingAmount = data.total_amount - depositAmount
   const platformFee = data.total_amount * 0.1 // 10% platform fee
 
+  // Construct properly typed insert object
+  const insertData: BookingInsert = {
+    client_id: data.client_id,
+    provider_id: data.provider_id,
+    project_id: data.project_id,
+    total_amount: data.total_amount,
+    deposit_amount: depositAmount,
+    remaining_amount: remainingAmount,
+    platform_fee: platformFee,
+    scheduled_date: data.scheduled_date,
+    scheduled_time: data.scheduled_time,
+    notes: data.notes,
+  }
+
   const { data: booking, error } = await supabase
     .from('bookings')
-    .insert({
-      ...data,
-      deposit_amount: depositAmount,
-      remaining_amount: remainingAmount,
-      platform_fee: platformFee,
-    } as any)
+    .insert(insertData)
     .select()
     .single()
 
@@ -70,9 +80,14 @@ export async function updateBookingStatus(
 ) {
   const supabase = await createClient()
 
+  // Construct properly typed update object
+  const updateData: BookingUpdate = {
+    status: status,
+  }
+
   const { data, error } = await supabase
     .from('bookings')
-    .update({ status })
+    .update(updateData)
     .eq('id', id)
     .select()
     .single()
