@@ -16,7 +16,6 @@ export async function createBooking(data: BookingInput & { client_id: string }) 
   const remainingAmount = data.total_amount - depositAmount
   const platformFee = data.total_amount * 0.1 // 10% platform fee
 
-  // Construct properly typed insert object
   const insertData: BookingInsert = {
     client_id: data.client_id,
     provider_id: data.provider_id,
@@ -80,7 +79,6 @@ export async function updateBookingStatus(
 ) {
   const supabase = await createClient()
 
-  // Construct properly typed update object
   const updateData: BookingUpdate = {
     status: status,
   }
