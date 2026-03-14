@@ -13,7 +13,7 @@ import { FloatingChat } from '@/components/dashboard/FloatingChat'
 
 export default function DashboardPage() {
   return (
-    <div className="min-h-screen bg-[#361F27] text-white">
+    <div className="min-h-screen bg-black text-white selection:bg-indigo-500/30">
       <Navigation />
       <main className="pt-20">
         <SearchSection />

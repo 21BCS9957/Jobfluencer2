@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { SearchBar } from './SearchBar'
-import { Sparkles } from 'lucide-react'
+import { Sparkles, Camera, Video, Scissors, Smartphone, Star } from 'lucide-react'
 
 export function SearchSection() {
   const handleSearch = (query: string) => {
@@ -31,7 +31,7 @@ export function SearchSection() {
               ease: "linear"
             }}
           >
-            <Sparkles className="w-6 h-6 text-[var(--brand-primary)]" />
+            <Sparkles className="w-6 h-6 text-indigo-400" />
           </motion.div>
         </div>
 
@@ -47,11 +47,11 @@ export function SearchSection() {
         >
           <span className="text-sm text-gray-400">Quick filters:</span>
           {[
-            { label: 'Photography', icon: '📷' },
-            { label: 'Videography', icon: '🎥' },
-            { label: 'Editing', icon: '✂️' },
-            { label: 'Social Media', icon: '📱' },
-            { label: 'Influencer', icon: '⭐' },
+            { label: 'Photography', icon: <Camera className="w-3.5 h-3.5" /> },
+            { label: 'Videography', icon: <Video className="w-3.5 h-3.5" /> },
+            { label: 'Editing', icon: <Scissors className="w-3.5 h-3.5" /> },
+            { label: 'Social Media', icon: <Smartphone className="w-3.5 h-3.5" /> },
+            { label: 'Influencer', icon: <Star className="w-3.5 h-3.5" /> },
           ].map((filter, i) => (
             <motion.button
               key={i}
@@ -60,9 +60,9 @@ export function SearchSection() {
               transition={{ delay: 0.5 + i * 0.05 }}
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[var(--brand-primary)]/50 rounded-full text-sm text-gray-300 hover:text-white transition-all flex items-center gap-2"
+              className="px-4 py-2 bg-white/[0.02] hover:bg-white/[0.06] border border-white/[0.08] hover:border-indigo-500/30 rounded-full text-sm text-zinc-400 hover:text-white transition-all flex items-center gap-1.5 group"
             >
-              <span>{filter.icon}</span>
+              <span className="text-zinc-500 group-hover:text-indigo-400 transition-colors">{filter.icon}</span>
               <span>{filter.label}</span>
             </motion.button>
           ))}

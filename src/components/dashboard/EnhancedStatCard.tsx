@@ -43,29 +43,24 @@ export function EnhancedStatCard({ label, value, prefix = '', icon: Icon, color,
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1, duration: 0.5 }}
-      className="group relative bg-[var(--brand-dark)] rounded-xl p-6 border border-white/10 hover:border-white/20 transition-all duration-300 overflow-hidden"
+      className="group relative bg-white/[0.02] backdrop-blur-2xl rounded-2xl p-6 border border-white/[0.08] hover:border-white/[0.15] transition-all duration-300 overflow-hidden"
     >
-      {/* Gradient overlay on hover */}
+      {/* Very subtle glow effect */}
       <div 
-        className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
-      />
-      
-      {/* Subtle glow effect */}
-      <div 
-        className="absolute -inset-1 bg-gradient-to-br from-[var(--brand-primary)]/20 to-transparent opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300"
+        className="absolute -inset-1 bg-white/[0.02] opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-500"
       />
 
       <div className="relative">
-        {/* Icon with gradient background */}
+        {/* Icon with subtle background */}
         <motion.div 
-          className={`w-12 h-12 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center mb-4 shadow-lg`}
-          whileHover={{ scale: 1.1, rotate: 5 }}
+          className={`w-12 h-12 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center mb-5 ${color.replace('text-', 'text-')} group-hover:bg-white/[0.08] transition-colors`}
+          whileHover={{ scale: 1.05, rotate: 2 }}
           transition={{ type: "spring", stiffness: 400, damping: 10 }}
         >
-          <Icon className="w-6 h-6 text-white" />
+          <Icon className="w-5 h-5 flex-shrink-0" />
         </motion.div>
         
-        <p className="text-gray-400 text-sm mb-1 font-medium">{label}</p>
+        <p className="text-zinc-500 text-xs font-medium uppercase tracking-[0.1em] mb-1.5">{label}</p>
         <p className="text-3xl font-bold text-white">
           {prefix}
           <AnimatedCounter end={value} />

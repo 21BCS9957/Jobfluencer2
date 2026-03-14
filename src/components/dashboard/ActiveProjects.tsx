@@ -37,9 +37,9 @@ export function ActiveProjects() {
 
   const renderProjectCard = (project: any, status: string, cardIndex: number) => {
     const statusColors = {
-      inProgress: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-      underReview: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
-      completed: 'bg-green-500/20 text-green-400 border-green-500/30',
+      inProgress: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20 backdrop-blur-md',
+      underReview: 'bg-white/[0.04] text-zinc-300 border-white/[0.08] backdrop-blur-md',
+      completed: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 backdrop-blur-md',
     }
 
     const statusLabels = {
@@ -67,21 +67,21 @@ export function ActiveProjects() {
 
           <div className="mb-3">
             <div className="flex items-center justify-between text-xs mb-1">
-              <span className="text-gray-400">Progress</span>
-              <span className="text-[var(--brand-primary)] font-medium">{project.progress}%</span>
+              <span className="text-zinc-400">Progress</span>
+              <span className="text-indigo-400 font-medium">{project.progress}%</span>
             </div>
-            <div className="w-full bg-[#361F27] rounded-full h-2 overflow-hidden">
+            <div className="w-full bg-zinc-900 rounded-full h-2 overflow-hidden">
               <motion.div 
                 initial={{ width: 0 }}
                 whileInView={{ width: `${project.progress}%` }}
                 viewport={{ once: true }}
                 transition={{ delay: cardIndex * 0.1 + 0.3, duration: 0.8 }}
-                className="h-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] rounded-full"
+                className="h-full bg-indigo-500 rounded-full"
               />
             </div>
           </div>
 
-          <span className={`inline-block px-2 py-1 rounded text-xs font-medium border ${statusColors[status as keyof typeof statusColors]}`}>
+          <span className={`inline-block px-2.5 py-1 rounded-full text-[10px] tracking-wider uppercase font-semibold border ${statusColors[status as keyof typeof statusColors]}`}>
             {statusLabels[status as keyof typeof statusLabels]}
           </span>
         </GlassCard>
@@ -114,7 +114,7 @@ export function ActiveProjects() {
             viewport={{ once: true }}
             className="text-lg font-semibold mb-4 flex items-center gap-2"
           >
-            <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+            <span className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(99,102,241,0.6)]"></span>
             In Progress
           </motion.h3>
           <div className="space-y-4">
@@ -133,7 +133,7 @@ export function ActiveProjects() {
             transition={{ delay: 0.1 }}
             className="text-lg font-semibold mb-4 flex items-center gap-2"
           >
-            <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></span>
+            <span className="w-2 h-2 bg-zinc-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(161,161,170,0.6)]"></span>
             Under Review
           </motion.h3>
           <div className="space-y-4">
@@ -152,7 +152,7 @@ export function ActiveProjects() {
             transition={{ delay: 0.2 }}
             className="text-lg font-semibold mb-4 flex items-center gap-2"
           >
-            <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+            <span className="w-2 h-2 bg-emerald-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.6)]"></span>
             Completed
           </motion.h3>
           <div className="space-y-4">

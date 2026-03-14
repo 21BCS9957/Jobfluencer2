@@ -52,13 +52,11 @@ const socialLinks = [
 
 export function DashboardFooter() {
   return (
-    <footer className="relative mt-20 bg-[var(--brand-dark)] rounded-t-[40px] md:rounded-t-[56px] overflow-hidden">
-      {/* Gradient border at top */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--brand-primary)] to-transparent"></div>
+    <footer className="relative mt-20 rounded-t-[40px] lg:rounded-t-[80px] border-t border-x border-white/[0.08] overflow-hidden bg-[#0A0A0B]/80 backdrop-blur-3xl max-w-[1920px] mx-auto">
       
-      {/* Decorative gradient orbs */}
-      <div className="absolute top-20 left-10 w-64 h-64 bg-[var(--brand-primary)]/20 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-[var(--brand-secondary)]/20 rounded-full blur-3xl"></div>
+      {/* Decorative gradient glowing orb */}
+      <div className="absolute top-0 left-1/2 w-[800px] h-[400px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none -translate-x-1/2 -translate-y-1/2"></div>
+
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Top Section */}
@@ -71,15 +69,15 @@ export function DashboardFooter() {
             transition={{ duration: 0.6 }}
           >
             <div className="flex items-center gap-2 mb-6">
-              <Zap className="w-8 h-8 text-[var(--brand-primary)]" />
-              <span className="text-3xl font-bold text-white">Job Fluencer</span>
+              <Zap className="w-8 h-8 text-white" />
+              <span className="text-3xl font-semibold tracking-tight text-white">Job Fluencer</span>
             </div>
             
-            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 leading-tight">
+            <h3 className="text-2xl md:text-3xl font-medium text-zinc-100 mb-4 leading-tight">
               Empowering creative professionals to build their dream careers
             </h3>
             
-            <p className="text-gray-400 text-lg mb-6 leading-relaxed">
+            <p className="text-zinc-500 text-lg mb-6 leading-relaxed">
               Connect with clients, manage projects, and grow your business on India's premier creative talent marketplace.
             </p>
 
@@ -88,12 +86,12 @@ export function DashboardFooter() {
               <input 
                 type="email" 
                 placeholder="Enter your email" 
-                className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-[var(--brand-primary)] transition-colors"
+                className="flex-1 px-4 py-3 bg-white/[0.02] border border-white/[0.08] rounded-xl text-white placeholder:text-zinc-600 focus:outline-none focus:border-white/[0.2] focus:bg-white/[0.04] transition-all"
               />
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-6 py-3 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] rounded-lg font-medium hover:shadow-lg hover:shadow-[var(--brand-primary)]/50 transition-all duration-300 whitespace-nowrap"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-6 py-3 bg-white text-black rounded-xl font-medium hover:bg-zinc-200 transition-colors whitespace-nowrap shadow-lg shadow-black/50 border border-transparent"
               >
                 Subscribe
               </motion.button>
@@ -113,11 +111,11 @@ export function DashboardFooter() {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1 }}
-                    whileHover={{ scale: 1.2, rotate: 5 }}
-                    className="w-12 h-12 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[var(--brand-primary)]/50 flex items-center justify-center transition-all duration-300 group"
+                    whileHover={{ scale: 1.05 }}
+                    className="w-12 h-12 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.08] hover:border-white/[0.15] flex items-center justify-center transition-all duration-300 group"
                     aria-label={social.label}
                   >
-                    <Icon className="w-5 h-5 text-gray-400 group-hover:text-[var(--brand-primary)] transition-colors" />
+                    <Icon className="w-5 h-5 text-zinc-500 group-hover:text-white transition-colors" />
                   </motion.a>
                 )
               })}
@@ -134,17 +132,17 @@ export function DashboardFooter() {
                 viewport={{ once: true }}
                 transition={{ delay: colIdx * 0.1, duration: 0.6 }}
               >
-                <h4 className="text-white font-semibold mb-4">{column.title}</h4>
+                <h4 className="text-white font-medium mb-4">{column.title}</h4>
                 <ul className="space-y-3">
                   {column.links.map((link, linkIdx) => (
                     <li key={linkIdx}>
                       <Link
                         href={link.href}
-                        className="group inline-flex items-center gap-1 text-gray-400 hover:text-white transition-colors text-sm"
+                        className="group inline-flex items-center gap-1 text-zinc-500 hover:text-white transition-colors text-sm font-medium"
                       >
                         <span className="relative">
                           {link.label}
-                          <span className="absolute bottom-0 left-0 w-0 h-px bg-[var(--brand-primary)] group-hover:w-full transition-all duration-300"></span>
+                          <span className="absolute bottom-0 left-0 w-0 h-px bg-white group-hover:w-full transition-all duration-300"></span>
                         </span>
                         {link.href.startsWith('http') && (
                           <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -159,7 +157,7 @@ export function DashboardFooter() {
         </div>
 
         {/* Divider */}
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8"></div>
+        <div className="w-full h-px bg-white/[0.08] mb-8"></div>
 
         {/* Bottom Section */}
         <motion.div
@@ -169,28 +167,25 @@ export function DashboardFooter() {
           transition={{ delay: 0.4 }}
           className="flex flex-col md:flex-row items-center justify-between gap-4 pb-8"
         >
-          <div className="flex flex-col md:flex-row items-center gap-4 text-sm text-gray-400">
+          <div className="flex flex-col md:flex-row items-center gap-4 text-sm text-zinc-600 font-medium">
             <span>&copy; 2026 Job Fluencer. All rights reserved.</span>
             <span className="hidden md:inline">•</span>
-            <span>Made with ❤️ in India</span>
+            <span>Created with high-end precision.</span>
           </div>
 
-          <div className="flex items-center gap-6 text-sm text-gray-400">
-            <Link href="#" className="hover:text-white transition-colors">
+          <div className="flex items-center gap-6 text-sm text-zinc-600 font-medium">
+            <Link href="#" className="hover:text-zinc-300 transition-colors">
               Terms
             </Link>
-            <Link href="#" className="hover:text-white transition-colors">
+            <Link href="#" className="hover:text-zinc-300 transition-colors">
               Privacy
             </Link>
-            <Link href="#" className="hover:text-white transition-colors">
+            <Link href="#" className="hover:text-zinc-300 transition-colors">
               Cookies
             </Link>
           </div>
         </motion.div>
       </div>
-
-      {/* Decorative bottom gradient */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--brand-primary)] via-[var(--brand-secondary)] to-[var(--brand-primary)]"></div>
     </footer>
   )
 }

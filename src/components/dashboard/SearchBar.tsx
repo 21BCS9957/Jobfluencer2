@@ -72,7 +72,7 @@ export function SearchBar({ variant = 'hero', onSearch }: SearchBarProps) {
             onFocus={() => setShowSuggestions(true)}
             onKeyPress={handleKeyPress}
             placeholder="Search jobs, projects..."
-            className="w-full pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-[var(--brand-primary)] transition-colors"
+            className="w-full pl-10 pr-4 py-2 bg-white/[0.04] border border-white/[0.08] rounded-lg text-white placeholder:text-zinc-500 focus:outline-none focus:border-indigo-400 focus:bg-white/[0.08] transition-colors"
           />
         </div>
       </div>
@@ -106,7 +106,7 @@ export function SearchBar({ variant = 'hero', onSearch }: SearchBarProps) {
                 onBlur={() => setIsFocused(false)}
                 onKeyPress={handleKeyPress}
                 placeholder="Search for photography, videography, editing..."
-                className="w-full pl-12 pr-10 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-[var(--brand-primary)] focus:bg-white/10 transition-all"
+                className="w-full pl-12 pr-10 py-3 bg-white/[0.04] border border-white/[0.08] rounded-lg text-white placeholder:text-zinc-500 focus:outline-none focus:border-indigo-400 focus:bg-white/[0.08] transition-all"
               />
               {query && (
                 <button
@@ -127,16 +127,16 @@ export function SearchBar({ variant = 'hero', onSearch }: SearchBarProps) {
                 onChange={(e) => setLocation(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Location"
-                className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-[var(--brand-primary)] focus:bg-white/10 transition-all"
+                className="w-full pl-12 pr-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-lg text-white placeholder:text-zinc-500 focus:outline-none focus:border-indigo-400 focus:bg-white/[0.08] transition-all"
               />
             </div>
 
             {/* Search Button */}
             <motion.button
               onClick={handleSearch}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] rounded-lg font-medium hover:shadow-lg hover:shadow-[var(--brand-primary)]/50 transition-all duration-300 whitespace-nowrap"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="px-8 py-3 bg-white text-black rounded-lg font-medium hover:bg-zinc-200 transition-all duration-300 whitespace-nowrap shadow-lg shadow-black/50 border border-transparent"
             >
               Search Jobs
             </motion.button>
@@ -170,7 +170,7 @@ export function SearchBar({ variant = 'hero', onSearch }: SearchBarProps) {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: i * 0.05 }}
                         onClick={() => selectTrending(term)}
-                        className="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[var(--brand-primary)]/50 rounded-full text-sm text-gray-300 hover:text-white transition-all"
+                        className="px-3 py-1.5 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] hover:border-indigo-500/50 rounded-full text-sm text-zinc-300 hover:text-white transition-all"
                       >
                         {term}
                       </motion.button>
@@ -194,10 +194,10 @@ export function SearchBar({ variant = 'hero', onSearch }: SearchBarProps) {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: i * 0.05 }}
                         onClick={() => selectTrending(term)}
-                        className="w-full flex items-center gap-3 p-2 hover:bg-white/5 rounded-lg text-left transition-colors group"
+                        className="w-full flex items-center gap-3 p-2 hover:bg-white/[0.04] rounded-lg text-left transition-colors group"
                       >
-                        <Search className="w-4 h-4 text-gray-400 group-hover:text-[var(--brand-primary)] transition-colors" />
-                        <span className="text-sm text-gray-300 group-hover:text-white transition-colors">{term}</span>
+                        <Search className="w-4 h-4 text-zinc-500 group-hover:text-indigo-400 transition-colors" />
+                        <span className="text-sm text-zinc-300 group-hover:text-white transition-colors">{term}</span>
                       </motion.button>
                     ))}
                   </div>
@@ -225,7 +225,7 @@ export function SearchBar({ variant = 'hero', onSearch }: SearchBarProps) {
                       >
                         <div className="flex items-start justify-between">
                           <div>
-                            <h4 className="text-sm font-medium text-white group-hover:text-[var(--brand-primary)] transition-colors">
+                            <h4 className="text-sm font-medium text-white group-hover:text-indigo-400 transition-colors">
                               {result.title}
                             </h4>
                             <p className="text-xs text-gray-400 mt-1">{result.type}</p>

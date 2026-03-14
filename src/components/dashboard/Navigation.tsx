@@ -18,14 +18,14 @@ export function Navigation() {
   }, [])
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled ? 'bg-[var(--brand-dark)]/80 backdrop-blur-xl shadow-lg' : 'bg-transparent'
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
+      scrolled ? 'bg-black/60 backdrop-blur-2xl border-white/[0.08]' : 'bg-transparent border-transparent'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-4">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 shrink-0">
-            <Zap className="w-6 h-6 text-[var(--brand-primary)]" />
+            <Zap className="w-6 h-6 text-white" />
             <span className="text-xl font-bold text-white">
               Job Fluencer
             </span>
@@ -64,21 +64,21 @@ export function Navigation() {
             <div className="relative">
               <button 
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center space-x-2 p-1 rounded-lg hover:bg-white/5 transition-colors"
+                className="flex items-center space-x-2 p-1 rounded-lg hover:bg-white/[0.05] transition-colors"
               >
                 <img 
                   src="https://api.dicebear.com/7.x/lorelei/svg?seed=Kanika" 
                   alt="Profile" 
-                  className="w-8 h-8 rounded-full ring-2 ring-[var(--brand-primary)]"
+                  className="w-8 h-8 rounded-full ring-2 ring-white/[0.12]"
                 />
-                <ChevronDown className="w-4 h-4 text-gray-400" />
+                <ChevronDown className="w-4 h-4 text-zinc-400" />
               </button>
 
               {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-[var(--brand-dark)] rounded-lg shadow-xl border border-white/10 overflow-hidden">
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 transition-colors">Profile</a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 transition-colors">Settings</a>
-                  <a href="#" className="block px-4 py-2 text-sm text-red-400 hover:bg-white/5 transition-colors">Logout</a>
+                <div className="absolute right-0 mt-2 w-48 bg-black/80 backdrop-blur-2xl rounded-xl shadow-2xl border border-white/[0.08] overflow-hidden">
+                  <a href="#" className="block px-4 py-2 text-sm text-zinc-300 hover:bg-white/[0.04] transition-colors">Profile</a>
+                  <a href="#" className="block px-4 py-2 text-sm text-zinc-300 hover:bg-white/[0.04] transition-colors">Settings</a>
+                  <a href="#" className="block px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 transition-colors">Logout</a>
                 </div>
               )}
             </div>

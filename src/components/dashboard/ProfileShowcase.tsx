@@ -61,12 +61,12 @@ export function ProfileShowcase() {
               <img 
                 src="https://api.dicebear.com/7.x/lorelei/svg?seed=Kanika" 
                 alt="Profile" 
-                className="w-full h-full rounded-full ring-4 ring-[var(--brand-primary)]"
+                className="w-full h-full rounded-full ring-4 ring-indigo-500/50"
               />
               <motion.div 
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
-                className="absolute bottom-2 right-2 w-4 h-4 bg-[#22c55e] rounded-full ring-4 ring-[var(--brand-dark)]"
+                className="absolute bottom-2 right-2 w-4 h-4 bg-[#22c55e] rounded-full ring-4 ring-black"
               />
             </motion.div>
 
@@ -104,7 +104,7 @@ export function ProfileShowcase() {
                 $85/hr
               </motion.div>
               
-              <span className="inline-block px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-medium border border-green-500/30">
+              <span className="inline-block px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-full text-xs font-semibold tracking-wide border border-emerald-500/20 backdrop-blur-md shadow-[0_0_15px_rgba(16,185,129,0.1)]">
                 Open to Work
               </span>
             </div>
@@ -139,7 +139,7 @@ export function ProfileShowcase() {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.05 }}
                   whileHover={{ scale: 1.1, y: -2 }}
-                  className="px-4 py-2 bg-gradient-to-r from-[var(--brand-primary)]/20 to-[var(--brand-secondary)]/20 border border-[var(--brand-primary)]/30 rounded-lg text-sm font-medium hover:border-[var(--brand-primary)] transition-colors cursor-pointer"
+                  className="px-4 py-2 bg-indigo-500/10 border border-indigo-500/20 rounded-lg text-sm font-medium hover:border-indigo-500/40 text-indigo-400 hover:text-indigo-300 transition-colors cursor-pointer"
                 >
                   {skill}
                 </motion.span>

@@ -76,8 +76,8 @@ export function ClientReviews() {
           >
             <GlassCard className="h-full flex flex-col relative">
               {/* Quote icon */}
-              <div className="absolute top-4 right-4 opacity-10">
-                <Quote className="w-12 h-12 text-[var(--brand-primary)]" />
+              <div className="absolute top-4 right-4 opacity-20">
+                <Quote className="w-12 h-12 text-indigo-400" />
               </div>
 
               {/* Avatar & Info */}
@@ -89,7 +89,7 @@ export function ClientReviews() {
                   transition={{ delay: index * 0.15 + 0.2, type: "spring", stiffness: 200 }}
                   src={review.avatar} 
                   alt={review.name} 
-                  className="w-14 h-14 rounded-full ring-2 ring-[var(--brand-primary)]"
+                  className="w-14 h-14 rounded-full ring-2 ring-indigo-500/50"
                 />
                 <div>
                   <h4 className="font-semibold text-white">{review.name}</h4>
@@ -116,13 +116,13 @@ export function ClientReviews() {
 
               {/* Project Tag */}
               <div className="relative z-10">
-                <span className="inline-block px-3 py-1 bg-[var(--brand-primary)]/20 border border-[var(--brand-primary)]/30 rounded-full text-xs text-[var(--brand-primary)] font-medium">
+                <span className="inline-block px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 rounded-full text-xs text-indigo-400 font-medium">
                   {review.project}
                 </span>
               </div>
 
               {/* Hover gradient effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-primary)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+              <div className="absolute inset-0 bg-white/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
             </GlassCard>
           </motion.div>
         ))}
@@ -143,7 +143,7 @@ export function ClientReviews() {
                 key={i}
                 src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`}
                 alt={name}
-                className="w-8 h-8 rounded-full ring-2 ring-[var(--brand-dark)]"
+                className="w-8 h-8 rounded-full ring-2 ring-black"
               />
             ))}
           </div>

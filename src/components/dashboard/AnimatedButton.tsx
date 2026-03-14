@@ -13,10 +13,10 @@ interface AnimatedButtonProps {
 }
 
 const variants = {
-  primary: 'bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white shadow-lg shadow-[var(--brand-primary)]/30',
-  secondary: 'bg-white/10 text-white border border-white/20',
-  outline: 'border-2 border-[var(--brand-primary)] text-white hover:bg-[var(--brand-primary)]/10',
-  success: 'bg-gradient-to-r from-[#22c55e] to-[#16a34a] text-white shadow-lg shadow-green-500/30',
+  primary: 'bg-white text-black shadow-lg shadow-black/50 hover:bg-zinc-200 border border-transparent',
+  secondary: 'bg-white/[0.03] text-white border border-white/[0.08] hover:bg-white/[0.08] backdrop-blur-xl',
+  outline: 'border border-white/[0.12] text-white hover:bg-white/[0.05] backdrop-blur-xl',
+  success: 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/20 hover:bg-indigo-400 border border-transparent',
 }
 
 export function AnimatedButton({ 
