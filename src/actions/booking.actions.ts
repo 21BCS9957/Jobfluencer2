@@ -6,6 +6,7 @@ import type { BookingInput } from '@/lib/validations'
 import type { Database } from '@/lib/types/database'
 
 type BookingStatus = Database['public']['Tables']['bookings']['Row']['status']
+type BookingUpdate = Database['public']['Tables']['bookings']['Update']
 
 export async function createBooking(data: BookingInput & { client_id: string }) {
   const supabase = await createClient()
@@ -69,7 +70,8 @@ export async function updateBookingStatus(
 ) {
   const supabase = await createClient()
 
-  const updateData: Partial<Database['public']['Tables']['bookings']['Row']> = {
+  // Use the Update type which is what .update() expects
+  const updateData: BookingUpdate = {
     status
   }
 
