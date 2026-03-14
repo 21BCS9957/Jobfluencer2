@@ -99,8 +99,8 @@ export function RecommendedJobs() {
               transition={{ delay: index * 0.1 }}
               whileHover={{ y: -8 }}
             >
-              <GlassCard className="h-full flex flex-col">
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-[var(--brand-primary)] transition-colors">
+              <GlassCard className="h-full" fullHeight={true}>
+                <h3 className="text-xl font-semibold mb-2 group-hover:text-indigo-400 transition-colors text-white">
                   {job.title}
                 </h3>
                 <p className="text-gray-400 text-sm mb-4">{job.client}</p>
@@ -110,16 +110,16 @@ export function RecommendedJobs() {
                     <DollarSign className="w-4 h-4" />
                     <span className="text-sm font-medium">{job.budget}</span>
                   </div>
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                  <span className={`px-3 py-1 rounded-full text-[10px] tracking-wider uppercase font-semibold border backdrop-blur-md ${
                     job.type === 'Fixed' 
-                      ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' 
-                      : 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
+                      ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20' 
+                      : 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20'
                   }`}>
                     {job.type}
                   </span>
                 </div>
 
-                <div className="flex flex-wrap gap-2 mb-4 flex-grow">
+                <div className="flex flex-wrap gap-2 mb-6">
                   {job.skills.map((skill, i) => (
                     <motion.span 
                       key={i} 
@@ -127,16 +127,18 @@ export function RecommendedJobs() {
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.1 + i * 0.05 }}
-                      className="px-2 py-1 bg-white/5 rounded text-xs text-gray-300 border border-white/10 hover:border-[var(--brand-primary)]/50 transition-colors"
+                      className="px-2 py-1 bg-white/[0.04] rounded text-xs text-zinc-400 border border-white/[0.08] hover:border-indigo-500/50 hover:text-zinc-200 transition-colors"
                     >
                       {skill}
                     </motion.span>
                   ))}
                 </div>
 
-                <AnimatedButton variant="primary" fullWidth>
-                  Place Bid
-                </AnimatedButton>
+                <div className="mt-auto">
+                  <AnimatedButton variant="primary" fullWidth>
+                    Place Bid
+                  </AnimatedButton>
+                </div>
               </GlassCard>
             </motion.div>
           ))

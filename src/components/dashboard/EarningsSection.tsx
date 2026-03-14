@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
+import { AnimatedButton } from './AnimatedButton'
 
 const monthlyData = [
   { month: 'Jan', amount: 2400 },
@@ -53,9 +54,9 @@ export function EarningsSection() {
       <h2 className="text-3xl font-bold mb-8">Earnings & Payments</h2>
 
       {/* Bar chart */}
-      <div className="bg-[var(--brand-dark)] rounded-2xl p-6 sm:p-8 border border-white/10 mb-6 overflow-hidden">
+      <div className="bg-white/[0.02] backdrop-blur-2xl rounded-2xl p-6 sm:p-8 border border-white/[0.08] mb-6 overflow-hidden">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-semibold text-white">Monthly Earnings</h3>
+          <h3 className="text-xl font-medium text-white tracking-tight">Monthly Earnings</h3>
           <span className="text-sm text-gray-400">Last 6 months</span>
         </div>
 
@@ -117,11 +118,11 @@ export function EarningsSection() {
                           },
                         }}
                       >
-                        <span className="absolute -top-9 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-[#1a0f14] border border-white/10 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-white whitespace-nowrap shadow-xl z-10">
+                        <span className="absolute -top-9 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black border border-white/[0.12] px-2.5 py-1.5 rounded-lg text-xs font-semibold text-white whitespace-nowrap shadow-xl z-10">
                           ${data.amount.toLocaleString()}
                         </span>
                         <div
-                          className="w-full rounded-t-lg bg-gradient-to-t from-[var(--brand-primary)] to-[var(--brand-secondary)] shadow-lg shadow-[var(--brand-primary)]/20 hover:brightness-110 transition-all duration-200 absolute bottom-0 left-0 right-0"
+                          className="w-full rounded-t-lg bg-indigo-500 shadow-lg shadow-indigo-500/20 hover:bg-indigo-400 transition-all duration-200 absolute bottom-0 left-0 right-0"
                           style={{ height: barHeightPx }}
                         />
                       </motion.div>
@@ -138,8 +139,8 @@ export function EarningsSection() {
       </div>
 
       {/* Transactions Table */}
-      <div className="bg-[var(--brand-dark)] rounded-xl p-6 border border-white/10 mb-6">
-        <h3 className="text-xl font-semibold mb-4">Recent Transactions</h3>
+      <div className="bg-white/[0.02] backdrop-blur-2xl rounded-2xl p-6 border border-white/[0.08] mb-6">
+        <h3 className="text-xl font-medium tracking-tight mb-4 text-white">Recent Transactions</h3>
         
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -158,10 +159,10 @@ export function EarningsSection() {
                   <td className="py-3 text-sm">{tx.project}</td>
                   <td className="py-3 text-sm font-semibold text-[#22c55e]">${tx.amount.toLocaleString()}</td>
                   <td className="py-3">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                    <span className={`px-2.5 py-1 rounded-full text-[10px] tracking-wider uppercase font-semibold border backdrop-blur-md ${
                       tx.status === 'Completed' 
-                        ? 'bg-green-500/20 text-green-400' 
-                        : 'bg-amber-500/20 text-amber-400'
+                        ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
+                        : 'bg-zinc-500/10 text-zinc-300 border-zinc-500/20'
                     }`}>
                       {tx.status}
                     </span>
@@ -174,9 +175,9 @@ export function EarningsSection() {
       </div>
 
       {/* Withdraw Button */}
-      <button className="px-6 py-3 bg-gradient-to-r from-[#22c55e] to-[#16a34a] rounded-lg font-semibold hover:shadow-2xl hover:shadow-green-500/50 transition-all duration-300 hover:scale-105">
+      <AnimatedButton variant="primary">
         Withdraw Earnings
-      </button>
+      </AnimatedButton>
     </section>
   )
 }
