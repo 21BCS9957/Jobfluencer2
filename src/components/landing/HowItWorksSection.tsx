@@ -271,16 +271,16 @@ export function HowItWorksSection() {
           </p>
         </div>
 
-        {/* Frame Gallery - Masonry Style; shorter rows on mobile */}
-        <div className="grid grid-cols-12 gap-2 sm:gap-3 md:gap-4 auto-rows-[140px] sm:auto-rows-[180px] md:auto-rows-[220px]">
+        {/* Frame Gallery - Responsive Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-12 gap-3 sm:gap-4 md:gap-4">
           {/* Frame 1 - Large */}
           <div
             ref={(el) => {
               framesRef.current[0] = el
             }}
-            className="col-span-12 sm:col-span-7 row-span-2 group"
+            className="col-span-2 sm:col-span-7 group"
           >
-            <div className="relative w-full h-full overflow-hidden rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all duration-500 hover:shadow-[0_8px_40px_rgba(145,47,86,0.25)] hover:scale-[1.02]">
+            <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] overflow-hidden rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all duration-500 hover:shadow-[0_8px_40px_rgba(145,47,86,0.25)] hover:scale-[1.02]">
               <Image
                 src={FRAMES[0].image}
                 alt="Creative work"
@@ -290,17 +290,17 @@ export function HowItWorksSection() {
               />
               {FRAMES[0].label && (
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <span className="text-white text-2xl sm:text-3xl md:text-4xl font-bold tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
+                  <span className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
                     {FRAMES[0].label}
                   </span>
                 </div>
               )}
               {/* Pills */}
-              <div className="absolute bottom-4 left-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 {FRAMES[0].pills.map((pill) => (
                   <span
                     key={pill}
-                    className="px-4 py-2 rounded-full text-xs sm:text-sm font-medium text-white border border-white/50 hover:border-white transition-colors duration-300"
+                    className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium text-white border border-white/50 hover:border-white transition-colors duration-300"
                   >
                     {pill}
                   </span>
@@ -314,29 +314,29 @@ export function HowItWorksSection() {
             ref={(el) => {
               framesRef.current[1] = el
             }}
-            className="col-span-12 sm:col-span-5 row-span-1 group"
+            className="col-span-1 sm:col-span-5 group"
           >
-            <div className="relative w-full h-full overflow-hidden rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all duration-500 hover:shadow-[0_8px_40px_rgba(145,47,86,0.25)] hover:scale-[1.02]">
+            <div className="relative w-full aspect-[3/4] sm:aspect-[4/3] overflow-hidden rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all duration-500 hover:shadow-[0_8px_40px_rgba(145,47,86,0.25)] hover:scale-[1.02]">
               <Image
                 src={FRAMES[1].image}
                 alt="Creative work"
                 fill
                 className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
-                sizes="(max-width: 640px) 100vw, 42vw"
+                sizes="(max-width: 640px) 50vw, 42vw"
               />
               {FRAMES[1].label && (
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <span className="text-white text-xl sm:text-2xl md:text-3xl font-bold tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
+                  <span className="text-white text-base sm:text-xl md:text-2xl lg:text-3xl font-bold tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
                     {FRAMES[1].label}
                   </span>
                 </div>
               )}
               {/* Pills */}
-              <div className="absolute bottom-4 left-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 {FRAMES[1].pills.map((pill) => (
                   <span
                     key={pill}
-                    className="px-3 py-1.5 rounded-full text-xs font-medium text-white border border-white/50 hover:border-white transition-colors duration-300"
+                    className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs font-medium text-white border border-white/50 hover:border-white transition-colors duration-300"
                   >
                     {pill}
                   </span>
@@ -350,9 +350,9 @@ export function HowItWorksSection() {
             ref={(el) => {
               framesRef.current[2] = el
             }}
-            className="col-span-6 sm:col-span-5 row-span-1 group"
+            className="col-span-1 sm:col-span-5 group"
           >
-            <div className="relative w-full h-full overflow-hidden rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all duration-500 hover:shadow-[0_8px_40px_rgba(145,47,86,0.25)] hover:scale-[1.02]">
+            <div className="relative w-full aspect-[3/4] sm:aspect-[4/3] overflow-hidden rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all duration-500 hover:shadow-[0_8px_40px_rgba(145,47,86,0.25)] hover:scale-[1.02]">
               <Image
                 src={FRAMES[2].image}
                 alt="Creative work"
@@ -362,7 +362,7 @@ export function HowItWorksSection() {
               />
               {FRAMES[2].label && (
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <span className="text-white text-lg sm:text-xl md:text-2xl font-bold tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
+                  <span className="text-white text-base sm:text-lg md:text-xl lg:text-2xl font-bold tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
                     {FRAMES[2].label}
                   </span>
                 </div>
@@ -372,7 +372,7 @@ export function HowItWorksSection() {
                 {FRAMES[2].pills.map((pill) => (
                   <span
                     key={pill}
-                    className="px-3 py-1.5 rounded-full text-xs font-medium text-white border border-white/50 hover:border-white transition-colors duration-300"
+                    className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs font-medium text-white border border-white/50 hover:border-white transition-colors duration-300"
                   >
                     {pill}
                   </span>
@@ -386,9 +386,9 @@ export function HowItWorksSection() {
             ref={(el) => {
               framesRef.current[3] = el
             }}
-            className="col-span-6 sm:col-span-4 row-span-2 group"
+            className="col-span-1 sm:col-span-4 group"
           >
-            <div className="relative w-full h-full overflow-hidden rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all duration-500 hover:shadow-[0_8px_40px_rgba(145,47,86,0.25)] hover:scale-[1.02]">
+            <div className="relative w-full aspect-[3/4] overflow-hidden rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all duration-500 hover:shadow-[0_8px_40px_rgba(145,47,86,0.25)] hover:scale-[1.02]">
               <Image
                 src={FRAMES[3].image}
                 alt="Creative work"
@@ -398,17 +398,17 @@ export function HowItWorksSection() {
               />
               {FRAMES[3].label && (
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <span className="text-white text-xl sm:text-2xl md:text-3xl font-bold tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
+                  <span className="text-white text-base sm:text-xl md:text-2xl lg:text-3xl font-bold tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
                     {FRAMES[3].label}
                   </span>
                 </div>
               )}
               {/* Pills */}
-              <div className="absolute bottom-4 left-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 {FRAMES[3].pills.map((pill) => (
                   <span
                     key={pill}
-                    className="px-3 py-1.5 rounded-full text-xs font-medium text-white border border-white/50 hover:border-white transition-colors duration-300"
+                    className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs font-medium text-white border border-white/50 hover:border-white transition-colors duration-300"
                   >
                     {pill}
                   </span>
@@ -422,29 +422,29 @@ export function HowItWorksSection() {
             ref={(el) => {
               framesRef.current[4] = el
             }}
-            className="col-span-12 sm:col-span-8 row-span-2 group"
+            className="col-span-1 sm:col-span-8 group"
           >
-            <div className="relative w-full h-full overflow-hidden rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all duration-500 hover:shadow-[0_8px_40px_rgba(145,47,86,0.25)] hover:scale-[1.02]">
+            <div className="relative w-full aspect-[3/4] sm:aspect-[16/10] overflow-hidden rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all duration-500 hover:shadow-[0_8px_40px_rgba(145,47,86,0.25)] hover:scale-[1.02]">
               <Image
                 src={FRAMES[4].image}
                 alt="Creative work"
                 fill
                 className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
-                sizes="(max-width: 640px) 100vw, 67vw"
+                sizes="(max-width: 640px) 50vw, 67vw"
               />
               {FRAMES[4].label && (
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <span className="text-white text-2xl sm:text-3xl md:text-4xl font-bold tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
+                  <span className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
                     {FRAMES[4].label}
                   </span>
                 </div>
               )}
               {/* Pills */}
-              <div className="absolute bottom-4 left-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 {FRAMES[4].pills.map((pill) => (
                   <span
                     key={pill}
-                    className="px-4 py-2 rounded-full text-xs sm:text-sm font-medium text-white border border-white/50 hover:border-white transition-colors duration-300"
+                    className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium text-white border border-white/50 hover:border-white transition-colors duration-300"
                   >
                     {pill}
                   </span>
