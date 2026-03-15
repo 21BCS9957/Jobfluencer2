@@ -162,52 +162,129 @@ export function Navbar({ variant = 'default' }: { variant?: NavbarVariant }) {
                   <Menu className="w-6 h-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[min(320px,85vw)] sm:w-80 pt-[env(safe-area-inset-top)]">
-                <div className="flex flex-col gap-6 mt-8">
-                  {navLinks.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      onClick={() => setMobileOpen(false)}
-                      className={`text-lg font-medium ${
-                        pathname === link.href
-                          ? 'text-[var(--brand-primary)]'
-                          : 'text-[var(--brand-text)]'
-                      }`}
-                    >
-                      {link.name}
-                    </Link>
-                  ))}
+              <SheetContent side="right" className="w-[85vw] max-w-[320px] p-0 flex flex-col">
+                {/* Header */}
+                <div className="px-5 py-4 border-b">
+                  <Link
+                    href="/"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center gap-2"
+                  >
+                    <Zap className="w-6 h-6 text-[var(--brand-primary)]" />
+                    <span className="text-xl font-bold text-[var(--brand-text)]">
+                      Job Fluencer
+                    </span>
+                  </Link>
+                </div>
 
-                  <div className="border-t pt-4">
-                    <p className="text-sm font-medium text-gray-500 mb-3">Categories</p>
-                    {categories.map((category) => (
+                {/* Scrollable Content */}
+                <div className="flex-1 overflow-y-auto px-5 py-4">
+                  {/* Main Navigation */}
+                  <div className="space-y-1">
+                    {navLinks.map((link) => (
                       <Link
-                        key={category.slug}
-                        href={`/category/${category.slug}`}
+                        key={link.href}
+                        href={link.href}
                         onClick={() => setMobileOpen(false)}
-                        className="block py-2 text-gray-700"
+                        className={`block py-3.5 text-base font-medium border-b border-gray-100 transition-colors ${
+                          pathname === link.href
+                            ? 'text-[var(--brand-primary)]'
+                            : 'text-[var(--brand-text)] hover:text-[var(--brand-primary)]'
+                        }`}
                       >
-                        {category.name}
+                        {link.name}
                       </Link>
                     ))}
                   </div>
 
-                  {!user && (
-                    <div className="border-t pt-4 space-y-3">
-                      <Link href="/auth/login" onClick={() => setMobileOpen(false)}>
-                        <Button variant="outline" className="w-full">
-                          Login
-                        </Button>
+                  {/* Categories Section */}
+                  <div className="mt-6">
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                      Categories
+                    </p>
+                    <div className="space-y-1">
+                      {[
+                        { name: 'Photography', slug: 'photography', icon: '📷' },
+                        { name: 'Videography', slug: 'videography', icon: '🎥' },
+                        { name: 'Social Media', slug: 'social_media', icon: '📱' },
+                        { name: 'Video Editing', slug: 'editing', icon: '✂️' },
+                        { name: 'Influencer', slug: 'influencer', icon: '⭐' },
+                        { name: 'Content Creation', slug: 'content_creation', icon: '🎬' },
+                      ].map((category) => (
+                        <Link
+                          key={category.slug}
+                          href={`/category/${category.slug}`}
+                          onClick={() => setMobileOpen(false)}
+                          className="flex items-center gap-3 py-3.5 text-base text-gray-700 hover:text-[var(--brand-primary)] border-b border-gray-100 transition-colors"
+                        >
+                          <span className="text-xl">{category.icon}</span>
+                          <span>{category.name}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Quick Actions Section */}
+                  <div className="mt-6">
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                      Quick Actions
+                    </p>
+                    <div className="space-y-1">
+                      <Link
+                        href="/browse"
+                        onClick={() => setMobileOpen(false)}
+                        className="flex items-center gap-3 py-3.5 text-base text-gray-700 hover:text-[var(--brand-primary)] border-b border-gray-100 transition-colors"
+                      >
+                        <span className="text-xl">🔍</span>
+                        <span>Find Creatives</span>
                       </Link>
-                      <Link href="/auth/register" onClick={() => setMobileOpen(false)}>
-                        <Button className="w-full bg-[var(--brand-primary)] hover:bg-[var(--brand-secondary)] text-white">
-                          Join Now
-                        </Button>
+                      <Link
+                        href="/client/post-project"
+                        onClick={() => setMobileOpen(false)}
+                        className="flex items-center gap-3 py-3.5 text-base text-gray-700 hover:text-[var(--brand-primary)] border-b border-gray-100 transition-colors"
+                      >
+                        <span className="text-xl">💼</span>
+                        <span>Post a Job</span>
+                      </Link>
+                      <Link
+                        href="/auth/register"
+                        onClick={() => setMobileOpen(false)}
+                        className="flex items-center gap-3 py-3.5 text-base text-gray-700 hover:text-[var(--brand-primary)] border-b border-gray-100 transition-colors"
+                      >
+                        <span className="text-xl">🎨</span>
+                        <span>Become a Creative</span>
                       </Link>
                     </div>
-                  )}
+                  </div>
                 </div>
+
+                {/* Fixed Footer with Auth Buttons */}
+                {!user && (
+                  <div className="border-t bg-white px-5 py-4 space-y-2.5">
+                    <Link href="/auth/login" onClick={() => setMobileOpen(false)} className="block">
+                      <Button 
+                        variant="outline" 
+                        className="w-full h-12 text-base font-semibold border-gray-300 hover:bg-gray-50"
+                      >
+                        Login
+                      </Button>
+                    </Link>
+                    <Link href="/auth/register" onClick={() => setMobileOpen(false)} className="block">
+                      <Button 
+                        className="w-full h-12 text-base font-semibold bg-[var(--brand-primary)] hover:bg-[var(--brand-secondary)] text-white"
+                      >
+                        Join Now
+                      </Button>
+                    </Link>
+                  </div>
+                )}
+
+                {/* User Menu in Mobile */}
+                {user && profile && (
+                  <div className="border-t bg-white px-5 py-4">
+                    <UserMenu user={user} profile={profile} />
+                  </div>
+                )}
               </SheetContent>
             </Sheet>
           )}
