@@ -9,7 +9,8 @@ export async function createReview(data: ReviewInput & { reviewer_id: string; pr
 
   const { data: review, error } = await supabase
     .from('reviews')
-    .insert(data as any)
+    // @ts-ignore - Supabase type inference issue
+    .insert([data])
     .select()
     .single()
 

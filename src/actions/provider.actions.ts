@@ -12,7 +12,8 @@ export async function updateProviderProfile(
 
   const { data: profile, error } = await supabase
     .from('provider_profiles')
-    .update(data as any)
+    // @ts-ignore - Supabase type inference issue
+    .update(data)
     .eq('id', id)
     .select()
     .single()
