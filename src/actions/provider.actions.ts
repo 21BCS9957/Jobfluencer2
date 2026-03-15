@@ -84,13 +84,11 @@ export async function updateKYCStatus(
 ) {
   const supabase = await createClient()
 
-  const updates: any = { kyc_status: status }
-  if (rejectionReason) {
-    updates.kyc_rejection_reason = rejectionReason
-  }
+  const updates = { kyc_status: status, ...(rejectionReason && { kyc_rejection_reason: rejectionReason }) }
 
   const { data, error } = await supabase
     .from('provider_profiles')
+    // @ts-ignore - Supabase type inference issue
     .update(updates)
     .eq('id', id)
     .select()
