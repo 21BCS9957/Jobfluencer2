@@ -41,18 +41,21 @@ export async function middleware(request: NextRequest) {
       .eq('id', user.id)
       .single()
 
+    // @ts-ignore - Supabase type inference issue
+    const userRole = profile?.role
+
     // Protect client routes
-    if (pathname.startsWith('/client') && profile?.role !== 'client') {
+    if (pathname.startsWith('/client') && userRole !== 'client') {
       return NextResponse.redirect(new URL('/', request.url))
     }
 
     // Protect provider routes
-    if (pathname.startsWith('/provider') && profile?.role !== 'provider') {
+    if (pathname.startsWith('/provider') && userRole !== 'provider') {
       return NextResponse.redirect(new URL('/', request.url))
     }
 
     // Protect admin routes
-    if (pathname.startsWith('/admin') && profile?.role !== 'admin') {
+    if (pathname.startsWith('/admin') && userRole !== 'admin') {
       return NextResponse.redirect(new URL('/', request.url))
     }
   }
