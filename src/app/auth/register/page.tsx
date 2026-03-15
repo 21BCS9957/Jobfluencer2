@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Briefcase, Camera, Loader2 } from 'lucide-react'
@@ -13,7 +13,7 @@ import { Label } from '@/components/ui/label'
 import { Card } from '@/components/ui/card'
 import { register as registerAction } from '@/actions/auth.actions'
 
-export default function RegisterPage() {
+function RegisterForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const callback = searchParams.get('callback')
@@ -217,5 +217,20 @@ export default function RegisterPage() {
         </Link>
       </p>
     </Card>
+  )
+}
+
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={
+      <Card className="p-8">
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="w-8 h-8 animate-spin text-orange-600" />
+        </div>
+      </Card>
+    }>
+      <RegisterForm />
+    </Suspense>
   )
 }
