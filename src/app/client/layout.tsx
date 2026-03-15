@@ -32,6 +32,7 @@ export default async function ClientLayout({
     .eq('id', user.id)
     .single()
 
+  // @ts-ignore - Supabase type inference issue
   if (!profile || profile.role !== 'client') {
     redirect('/')
   }

@@ -27,6 +27,7 @@ export function useNotifications(userId: string | undefined) {
         .limit(20)
 
       setNotifications(data || [])
+      // @ts-ignore - Supabase type inference issue
       setUnreadCount(data?.filter((n) => !n.is_read).length || 0)
       setLoading(false)
     }
@@ -60,6 +61,7 @@ export function useNotifications(userId: string | undefined) {
     const supabase = createClient()
     await supabase
       .from('notifications')
+      // @ts-ignore - Supabase type inference issue
       .update({ is_read: true })
       .eq('id', notificationId)
 

@@ -150,7 +150,7 @@ export function HowItWorksSection() {
         })
 
         // Dot pulse animation
-        const dot = bullet.querySelector('.bullet-dot')
+        const dot = bullet?.querySelector('.bullet-dot')
         if (dot) {
           gsap.to(dot, {
             scale: 1.5,

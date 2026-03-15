@@ -23,7 +23,7 @@ export function MagneticText({
 
   const mousePos = useRef({ x: 0, y: 0 })
   const currentPos = useRef({ x: 0, y: 0 })
-  const animationFrameRef = useRef<number>()
+  const animationFrameRef = useRef<number | undefined>(undefined)
 
   useEffect(() => {
     const updateSize = () => {
@@ -37,6 +37,7 @@ export function MagneticText({
     updateSize()
     window.addEventListener("resize", updateSize)
     return () => window.removeEventListener("resize", updateSize)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {

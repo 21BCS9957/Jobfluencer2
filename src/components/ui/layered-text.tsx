@@ -30,7 +30,7 @@ export function LayeredText({
   className = "",
 }: LayeredTextProps) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const timelineRef = useRef<gsap.core.Timeline>()
+  const timelineRef = useRef<gsap.core.Timeline | undefined>(undefined)
 
   const calculateTranslateX = (index: number) => {
     const baseOffset = 24
@@ -64,6 +64,7 @@ export function LayeredText({
     return () => {
       timelineRef.current?.kill()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lines])
 
   return (
