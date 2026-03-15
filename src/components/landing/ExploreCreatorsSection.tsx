@@ -93,14 +93,14 @@ export function ExploreCreatorsSection() {
     : creators.filter(creator => creator.categorySlug === activeCategory)
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-white to-gray-50">
+    <section className="py-16 md:py-24 bg-[var(--brand-bg-base)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--brand-text)] mb-4">
             Explore Top Creators
           </h2>
-          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-[var(--muted-foreground)] max-w-3xl mx-auto">
             Connect with talented creators across photography, videography, social media, and content creation
           </p>
         </div>
@@ -116,8 +116,8 @@ export function ExploreCreatorsSection() {
                   onClick={() => setActiveCategory(category.slug)}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
                     activeCategory === category.slug
-                      ? 'bg-orange-500 text-white shadow-md'
-                      : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                      ? 'bg-[var(--brand-primary)] text-white shadow-lg shadow-[var(--brand-primary)]/25'
+                      : 'bg-white/50 text-[var(--brand-text)] hover:bg-white border border-[var(--border)]'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -136,7 +136,7 @@ export function ExploreCreatorsSection() {
               href={`/creator/${creator.id}`}
               className="group"
             >
-              <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-orange-200 hover:-translate-y-1">
+              <div className="bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-[var(--border)] hover:border-[var(--brand-primary)]/30 hover:-translate-y-1">
                 {/* Creator Image */}
                 <div className="relative aspect-square overflow-hidden bg-gray-100">
                   <Image
@@ -157,10 +157,10 @@ export function ExploreCreatorsSection() {
 
                 {/* Creator Info */}
                 <div className="p-4">
-                  <h3 className="font-semibold text-gray-900 mb-1 text-sm md:text-base truncate">
+                  <h3 className="font-semibold text-[var(--brand-text)] mb-1 text-sm md:text-base truncate">
                     {creator.name}
                   </h3>
-                  <p className="text-xs md:text-sm text-gray-600 mb-3 truncate">
+                  <p className="text-xs md:text-sm text-[var(--muted-foreground)] mb-3 truncate">
                     {creator.category}
                   </p>
 
@@ -168,14 +168,14 @@ export function ExploreCreatorsSection() {
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-1">
                       <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                      <span className="text-sm font-semibold text-gray-900">
+                      <span className="text-sm font-semibold text-[var(--brand-text)]">
                         {creator.rating}
                       </span>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-[var(--muted-foreground)]">
                         ({creator.reviews})
                       </span>
                     </div>
-                    <div className="text-xs text-gray-600">
+                    <div className="text-xs text-[var(--muted-foreground)]">
                       {creator.followers} followers
                     </div>
                   </div>
@@ -183,7 +183,7 @@ export function ExploreCreatorsSection() {
                   {/* CTA Button */}
                   <Button
                     size="sm"
-                    className="w-full bg-orange-500 hover:bg-orange-600 text-white text-xs md:text-sm font-medium group-hover:bg-orange-600 transition-colors"
+                    className="w-full bg-[var(--brand-primary)] hover:bg-[var(--brand-secondary)] text-white text-xs md:text-sm font-medium group-hover:bg-[var(--brand-secondary)] transition-colors"
                   >
                     View Profile
                     <ArrowRight className="w-3 h-3 md:w-4 md:h-4 ml-1 group-hover:translate-x-1 transition-transform" />
@@ -200,7 +200,7 @@ export function ExploreCreatorsSection() {
             <Button
               size="lg"
               variant="outline"
-              className="border-2 border-orange-500 text-orange-500 hover:bg-orange-50 font-semibold px-8"
+              className="border-2 border-[var(--brand-primary)] text-[var(--brand-primary)] hover:bg-[var(--brand-primary)] hover:text-white font-semibold px-8 transition-all"
             >
               View All Creators
               <ArrowRight className="w-5 h-5 ml-2" />
