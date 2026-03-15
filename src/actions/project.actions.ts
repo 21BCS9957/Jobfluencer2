@@ -9,7 +9,8 @@ export async function createProject(data: ProjectInput & { client_id: string }) 
 
   const { data: project, error } = await supabase
     .from('projects')
-    .insert(data as any)
+    // @ts-ignore - Supabase type inference issue
+    .insert([data])
     .select()
     .single()
 
@@ -70,7 +71,8 @@ export async function updateProject(id: string, updates: Partial<ProjectInput>) 
 
   const { data, error } = await supabase
     .from('projects')
-    .update(updates as any)
+    // @ts-ignore - Supabase type inference issue
+    .update(updates)
     .eq('id', id)
     .select()
     .single()

@@ -32,7 +32,7 @@ export async function createBooking(data: BookingInput & { client_id: string }) 
   const { data: booking, error} = await supabase
     .from('bookings')
     // @ts-ignore - Supabase type inference issue
-    .insert(insertData)
+    .insert([insertData])
     .select()
     .single()
 
