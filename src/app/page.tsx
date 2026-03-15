@@ -5,6 +5,7 @@ import { ExploreCreatorsSection } from '@/components/landing/ExploreCreatorsSect
 import { WorkflowSection } from '@/components/landing/WorkflowSection'
 import { TestimonialsSection } from '@/components/landing/TestimonialsSection'
 import { LayeredTextSection } from '@/components/landing/LayeredTextSection'
+import { DashboardFooter } from '@/components/dashboard/DashboardFooter'
 
 export default function HomePage() {
   return (
@@ -16,6 +17,7 @@ export default function HomePage() {
       <WorkflowSection />
       <TestimonialsSection />
       <LayeredTextSection />
+      <DashboardFooter />
     </>
   )
 }
