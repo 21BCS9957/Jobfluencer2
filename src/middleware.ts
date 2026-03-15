@@ -1,8 +1,12 @@
 import { NextResponse, type NextRequest } from 'next/server'
-import { updateSession } from '@/lib/supabase/middleware'
-import { createServerClient } from '@supabase/ssr'
+// import { updateSession } from '@/lib/supabase/middleware'
+// import { createServerClient } from '@supabase/ssr'
 
 export async function middleware(request: NextRequest) {
+  // Middleware temporarily disabled for deployment
+  return NextResponse.next()
+  
+  /* 
   const { supabaseResponse, user } = await updateSession(request)
   
   const { pathname } = request.nextUrl
@@ -61,6 +65,7 @@ export async function middleware(request: NextRequest) {
   }
 
   return supabaseResponse
+  */
 }
 
 export const config = {
