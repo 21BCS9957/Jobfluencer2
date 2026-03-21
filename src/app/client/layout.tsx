@@ -1,17 +1,16 @@
 import { redirect } from 'next/navigation'
-import { LayoutDashboard, Plus, FolderOpen, Calendar, MessageSquare, Settings } from 'lucide-react'
 import { Sidebar, SidebarItem } from '@/components/shared/Sidebar'
 import { NotificationBell } from '@/components/shared/NotificationBell'
 import { UserMenu } from '@/components/shared/UserMenu'
 import { createClient } from '@/lib/supabase/server'
 
 const sidebarItems: SidebarItem[] = [
-  { name: 'Dashboard', href: '/client/dashboard', icon: LayoutDashboard },
-  { name: 'Post Project', href: '/client/post-project', icon: Plus },
-  { name: 'My Projects', href: '/client/my-projects', icon: FolderOpen },
-  { name: 'Bookings', href: '/client/bookings', icon: Calendar },
-  { name: 'Messages', href: '/client/messages', icon: MessageSquare },
-  { name: 'Settings', href: '/client/settings', icon: Settings },
+  { name: 'Dashboard', href: '/client/dashboard', icon: 'LayoutDashboard' },
+  { name: 'Post Project', href: '/client/post-project', icon: 'Plus' },
+  { name: 'My Projects', href: '/client/my-projects', icon: 'FolderOpen' },
+  { name: 'Bookings', href: '/client/bookings', icon: 'Calendar' },
+  { name: 'Messages', href: '/client/messages', icon: 'MessageSquare' },
+  { name: 'Settings', href: '/client/settings', icon: 'Settings' },
 ]
 
 export default async function ClientLayout({

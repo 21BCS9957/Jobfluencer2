@@ -2,13 +2,35 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LucideIcon } from 'lucide-react'
+import { 
+  LayoutDashboard, 
+  Plus, 
+  FolderOpen, 
+  Calendar, 
+  MessageSquare, 
+  Settings,
+  Briefcase,
+  DollarSign,
+  User
+} from 'lucide-react'
 import { cn } from '@/lib/utils'
+
+const iconMap = {
+  LayoutDashboard,
+  Plus,
+  FolderOpen,
+  Calendar,
+  MessageSquare,
+  Settings,
+  Briefcase,
+  DollarSign,
+  User,
+}
 
 export interface SidebarItem {
   name: string
   href: string
-  icon: LucideIcon
+  icon: keyof typeof iconMap
   badge?: string
   badgeColor?: string
 }
@@ -24,7 +46,7 @@ export function Sidebar({ items }: SidebarProps) {
     <aside className="w-64 bg-white border-r border-gray-200 h-screen sticky top-0">
       <nav className="p-4 space-y-1">
         {items.map((item) => {
-          const Icon = item.icon
+          const Icon = iconMap[item.icon]
           const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
 
           return (

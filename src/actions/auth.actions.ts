@@ -21,15 +21,37 @@ export async function login(data: LoginInput) {
   if (authData.user) {
     const { data: profile } = await supabase
       .from('profiles')
-      .select('role')
+      .select('*')
       .eq('id', authData.user.id)
-      .single() as { data: { role: string } | null }
+      .single()
 
     revalidatePath('/', 'layout')
     
     if (profile?.role === 'client') {
+      // Check if client profile is complete
+      const isComplete = profile.phone && profile.city && profile.bio
+      if (!isComplete) {
+        redirect('/client/onboarding')
+      }
       redirect('/client/dashboard')
     } else if (profile?.role === 'provider') {
+      // Check if provider profile is complete
+      const { data: providerProfile } = await supabase
+        .from('provider_profiles')
+        .select('*')
+        .eq('id', authData.user.id)
+        .single()
+      
+      const isComplete = 
+        profile.phone && 
+        profile.city && 
+        profile.bio && 
+        providerProfile?.categories && 
+        providerProfile.categories.length > 0
+      
+      if (!isComplete) {
+        redirect('/provider/onboarding')
+      }
       redirect('/provider/dashboard')
     } else {
       redirect('/')

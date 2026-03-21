@@ -1,53 +1,17 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { Navigation } from '@/components/dashboard/Navigation'
 import { DashboardFooter } from '@/components/dashboard/DashboardFooter'
 import { FloatingChat } from '@/components/dashboard/FloatingChat'
 import { GlassCard } from '@/components/dashboard/GlassCard'
 import { AnimatedButton } from '@/components/dashboard/AnimatedButton'
 import { EnhancedStatCard } from '@/components/dashboard/EnhancedStatCard'
-import { Megaphone, Target, Users, LineChart, Plus, Filter } from 'lucide-react'
+import { Megaphone, Target, Users, LineChart, Plus, Loader2, Sparkles, Calendar } from 'lucide-react'
 import { motion } from 'framer-motion'
-
-const campaignStats = [
-  { label: 'Total Ad Spend', value: 185000, prefix: '₹', icon: LineChart, color: 'from-emerald-400 to-teal-500' },
-  { label: 'Active Campaigns', value: 4, icon: Megaphone, color: 'from-sky-400 to-indigo-500' },
-  { label: 'Influencers Engaged', value: 27, icon: Users, color: 'from-fuchsia-400 to-rose-500' },
-  { label: 'Avg. Engagement Rate', value: 18, prefix: '', icon: Target, color: 'from-amber-400 to-orange-500' },
-]
-
-const activeCampaigns = [
-  {
-    name: 'Summer Drop – Instagram Reels',
-    objective: 'Awareness',
-    platform: 'Instagram',
-    budget: '₹80,000',
-    spent: 54000,
-    progress: 68,
-    status: 'Live',
-    color: 'from-[var(--brand-primary)] to-[var(--brand-secondary)]',
-  },
-  {
-    name: 'YouTube Reviews – Flagship Launch',
-    objective: 'Consideration',
-    platform: 'YouTube',
-    budget: '₹1,20,000',
-    spent: 72000,
-    progress: 60,
-    status: 'Live',
-    color: 'from-sky-500 to-cyan-400',
-  },
-  {
-    name: 'UGC Content Bank – Always On',
-    objective: 'Content',
-    platform: 'Multi-platform',
-    budget: '₹45,000',
-    spent: 24000,
-    progress: 52,
-    status: 'In review',
-    color: 'from-emerald-400 to-lime-400',
-  },
-]
+import { useAuth } from '@/hooks/useAuth'
+import { useRouter } from 'next/navigation'
+import { getClientDashboardData } from '@/actions/dashboard.actions'
 
 const campaignTemplates = [
   {
@@ -70,14 +34,68 @@ const campaignTemplates = [
   },
 ]
 
-const pipeline = [
-  { creator: 'Priya Sharma', platform: 'Instagram', stage: 'Negotiating', fee: '₹45,000' },
-  { creator: 'Manav Tech', platform: 'YouTube', stage: 'Shortlisted', fee: '₹65,000' },
-  { creator: 'FoodWithAnanya', platform: 'Instagram', stage: 'Contract sent', fee: '₹32,000' },
-  { creator: 'FitWithKabir', platform: 'Instagram', stage: 'Live this week', fee: '₹55,000' },
-]
-
 export default function ClientDashboardPage() {
+  const { user, profile, loading } = useAuth()
+  const router = useRouter()
+  const [clientData, setClientData] = useState<any>(null)
+  const [dashboardData, setDashboardData] = useState<any>(null)
+  const [dataLoading, setDataLoading] = useState(true)
+
+  useEffect(() => {
+    if (!loading && profile?.bio) {
+      try {
+        const bioData = JSON.parse(profile.bio)
+        setClientData(bioData)
+      } catch {
+        setClientData({ description: profile.bio })
+      }
+    }
+  }, [profile, loading])
+
+  useEffect(() => {
+    async function fetchDashboardData() {
+      if (!loading && user) {
+        setDataLoading(true)
+        const result = await getClientDashboardData()
+        if (result.data) {
+          setDashboardData(result.data)
+        }
+        setDataLoading(false)
+      }
+    }
+    fetchDashboardData()
+  }, [user, loading])
+
+  if (loading || dataLoading) {
+    return (
+      <div className="min-h-screen bg-[#361F27] flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-white animate-spin" />
+      </div>
+    )
+  }
+
+  const fullName = profile?.full_name || 'User'
+  const companyName = clientData?.company_name || 'Your Company'
+  const industry = clientData?.industry
+
+  const stats = dashboardData?.stats || {
+    totalSpent: 0,
+    activeProjectsCount: 0,
+    providersEngaged: 0,
+    totalProjects: 0,
+  }
+
+  const campaignStats = [
+    { label: 'Total Ad Spend', value: stats.totalSpent, prefix: '₹', icon: LineChart, color: 'from-emerald-400 to-teal-500' },
+    { label: 'Active Campaigns', value: stats.activeProjectsCount, icon: Megaphone, color: 'from-sky-400 to-indigo-500' },
+    { label: 'Influencers Engaged', value: stats.providersEngaged, icon: Users, color: 'from-fuchsia-400 to-rose-500' },
+    { label: 'Total Projects', value: stats.totalProjects, icon: Target, color: 'from-amber-400 to-orange-500' },
+  ]
+
+  const activeProjects = dashboardData?.activeProjects || []
+  const activeBookings = dashboardData?.activeBookings || []
+  const hasActiveCampaigns = activeProjects.length > 0
+
   return (
     <div className="min-h-screen bg-[#361F27] text-white">
       <Navigation />
@@ -95,8 +113,16 @@ export default function ClientDashboardPage() {
                 BRAND SIDE · CAMPAIGN CONTROL
               </p>
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-3">
-                Run creator campaigns<br className="hidden sm:block" /> like a performance marketer.
+                Welcome back, {fullName}!
               </h1>
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-lg font-semibold">{companyName}</span>
+                {industry && (
+                  <span className="px-3 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-semibold">
+                    {industry}
+                  </span>
+                )}
+              </div>
               <p className="text-sm sm:text-base text-pink-100/80 max-w-xl">
                 Create briefs in minutes, pick the right influencers, and track performance –
                 all in the same Job Fluencer workspace your creators already use.
@@ -108,15 +134,21 @@ export default function ClientDashboardPage() {
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-pink-100/80 mb-1">
                   QUICK ACTION
                 </p>
-                <p className="text-lg font-semibold mb-2">Create a new campaign</p>
+                <p className="text-lg font-semibold mb-2">
+                  {hasActiveCampaigns ? 'Create another campaign' : 'Create your first campaign'}
+                </p>
                 <p className="text-sm text-pink-100/80 max-w-md">
                   Start with a ready-made workflow – we auto-structure the brief, deliverables,
                   and payment milestones for you.
                 </p>
               </div>
-              <AnimatedButton variant="primary" className="whitespace-nowrap">
+              <AnimatedButton 
+                variant="primary" 
+                className="whitespace-nowrap"
+                onClick={() => router.push('/client/post-project')}
+              >
                 <Plus className="w-4 h-4 mr-2 inline-block align-middle" />
-                <span className="align-middle">New campaign</span>
+                <span className="align-middle">Post Campaign</span>
               </AnimatedButton>
             </GlassCard>
           </div>
@@ -139,66 +171,94 @@ export default function ClientDashboardPage() {
             <div>
               <h2 className="text-xl sm:text-2xl font-semibold">Active campaigns</h2>
               <p className="text-sm text-pink-100/80">
-                Live creator work, budgets, and pacing – in one glance.
+                {hasActiveCampaigns 
+                  ? 'Live creator work, budgets, and pacing – in one glance.'
+                  : 'No active campaigns yet. Create your first one to get started!'}
               </p>
             </div>
-            <button className="inline-flex items-center gap-2 text-xs sm:text-sm px-3 py-2 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition-colors">
-              <Filter className="w-4 h-4" />
-              Filter & sort
-            </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
-            {activeCampaigns.map((campaign) => (
-              <GlassCard key={campaign.name} className="h-full flex flex-col justify-between">
-                <div className="space-y-3">
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-pink-100/80">
-                        {campaign.platform}
+          {hasActiveCampaigns ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
+              {activeProjects.map((project: any) => {
+                const projectBookings = activeBookings.filter((b: any) => b.project_id === project.id)
+                const totalBudget = project.budget_max || project.budget_min || 0
+                const spent = projectBookings.reduce((sum: number, b: any) => 
+                  sum + (parseFloat(b.total_amount?.toString() || '0')), 0
+                )
+                const progress = totalBudget > 0 ? Math.round((spent / totalBudget) * 100) : 0
+
+                return (
+                  <GlassCard key={project.id} className="h-full flex flex-col justify-between">
+                    <div className="space-y-3">
+                      <div className="flex items-start justify-between gap-2">
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-pink-100/80">
+                            {project.category.replace('_', ' ')}
+                          </p>
+                          <h3 className="text-sm sm:text-base font-semibold mt-1">{project.title}</h3>
+                        </div>
+                        <span className="px-2 py-1 rounded-full text-[10px] font-semibold tracking-wide bg-emerald-500/20 text-emerald-300 border border-emerald-400/40">
+                          {project.status}
+                        </span>
+                      </div>
+
+                      <p className="text-xs text-pink-100/80">
+                        {project.location || 'Remote'} · ₹{totalBudget.toLocaleString()} budget
                       </p>
-                      <h3 className="text-sm sm:text-base font-semibold mt-1">{campaign.name}</h3>
-                    </div>
-                    <span
-                      className={`px-2 py-1 rounded-full text-[10px] font-semibold tracking-wide ${
-                        campaign.status === 'Live'
-                          ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/40'
-                          : 'bg-amber-500/20 text-amber-300 border border-amber-400/40'
-                      }`}
-                    >
-                      {campaign.status}
-                    </span>
-                  </div>
 
-                  <p className="text-xs text-pink-100/80">{campaign.objective} · {campaign.budget} budget</p>
+                      {totalBudget > 0 && (
+                        <div className="mt-2">
+                          <div className="flex items-center justify-between text-[11px] text-pink-100/80 mb-1">
+                            <span>Budget used</span>
+                            <span>{progress}% · ₹{spent.toLocaleString()}</span>
+                          </div>
+                          <div className="w-full h-2.5 rounded-full bg-[#2c1220] overflow-hidden">
+                            <div
+                              className="h-full rounded-full bg-gradient-to-r from-orange-600 to-pink-500"
+                              style={{ width: `${Math.min(progress, 100)}%` }}
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
 
-                  {/* Progress bar */}
-                  <div className="mt-2">
-                    <div className="flex items-center justify-between text-[11px] text-pink-100/80 mb-1">
-                      <span>Budget used</span>
-                      <span>{campaign.progress}% · ₹{campaign.spent.toLocaleString()}</span>
+                    <div className="mt-4">
+                      <AnimatedButton 
+                        variant="secondary" 
+                        fullWidth
+                        onClick={() => router.push(`/client/my-projects`)}
+                      >
+                        View Details
+                      </AnimatedButton>
                     </div>
-                    <div className="w-full h-2.5 rounded-full bg-[#2c1220] overflow-hidden">
-                      <div
-                        className={`h-full rounded-full bg-gradient-to-r ${campaign.color}`}
-                        style={{ width: `${campaign.progress}%` }}
-                      />
-                    </div>
-                  </div>
+                  </GlassCard>
+                )
+              })}
+            </div>
+          ) : (
+            <GlassCard className="text-center py-12">
+              <div className="flex flex-col items-center gap-4">
+                <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+                  <Sparkles className="w-8 h-8 text-pink-200/60" />
                 </div>
-
-                <div className="mt-4 flex items-center justify-between text-[11px] text-pink-100/80">
-                  <span>View deliverables & creators</span>
-                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-pink-100">
-                    Open board
-                    <span className="inline-block w-4 h-4 rounded-full bg-white/10 flex items-center justify-center">
-                      <span className="inline-block border-l border-t border-current w-2 h-2 rotate-45 translate-x-[1px]" />
-                    </span>
-                  </span>
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">No active campaigns yet</h3>
+                  <p className="text-sm text-pink-100/80 max-w-md mx-auto mb-6">
+                    Get started by creating your first campaign. We'll help you find the perfect creators
+                    and manage everything from brief to delivery.
+                  </p>
+                  <AnimatedButton 
+                    variant="primary"
+                    onClick={() => router.push('/client/post-project')}
+                  >
+                    <Plus className="w-4 h-4 mr-2 inline-block align-middle" />
+                    <span className="align-middle">Create First Campaign</span>
+                  </AnimatedButton>
                 </div>
-              </GlassCard>
-            ))}
-          </div>
+              </div>
+            </GlassCard>
+          )}
         </section>
 
         {/* Templates + pipeline */}
@@ -234,7 +294,11 @@ export default function ClientDashboardPage() {
                     </div>
                   </div>
                   <div className="mt-4">
-                    <AnimatedButton variant="secondary" fullWidth>
+                    <AnimatedButton 
+                      variant="secondary" 
+                      fullWidth
+                      onClick={() => router.push('/client/post-project')}
+                    >
                       Use this flow
                     </AnimatedButton>
                   </div>
@@ -249,34 +313,64 @@ export default function ClientDashboardPage() {
               <div>
                 <h2 className="text-base sm:text-lg font-semibold">Influencer pipeline</h2>
                 <p className="text-xs text-pink-100/80">
-                  Where each creator sits across all live campaigns.
+                  Active collaborations across all campaigns.
                 </p>
               </div>
             </div>
 
-            <div className="space-y-3">
-              {pipeline.map((row) => (
-                <div
-                  key={row.creator}
-                  className="flex items-center justify-between gap-3 rounded-lg bg-white/5 border border-white/10 px-3 py-2.5"
-                >
-                  <div className="min-w-0">
-                    <p className="text-sm font-semibold truncate">{row.creator}</p>
-                    <p className="text-[11px] text-pink-100/80">{row.platform}</p>
+            {activeBookings.length > 0 ? (
+              <div className="space-y-3">
+                {activeBookings.slice(0, 4).map((booking: any) => (
+                  <div
+                    key={booking.id}
+                    className="flex items-center justify-between gap-3 rounded-lg bg-white/5 border border-white/10 px-3 py-2.5"
+                  >
+                    <div className="min-w-0 flex items-center gap-2">
+                      {booking.provider?.avatar_url && (
+                        <img 
+                          src={booking.provider.avatar_url} 
+                          alt={booking.provider.full_name}
+                          className="w-8 h-8 rounded-full object-cover"
+                        />
+                      )}
+                      <div>
+                        <p className="text-sm font-semibold truncate">
+                          {booking.provider?.full_name || 'Provider'}
+                        </p>
+                        <p className="text-[11px] text-pink-100/80">
+                          {booking.project?.title || 'Project'}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end gap-1">
+                      <span className="text-[11px] font-semibold text-pink-100">
+                        ₹{parseFloat(booking.total_amount || '0').toLocaleString()}
+                      </span>
+                      <span className="px-2 py-1 rounded-full text-[10px] font-semibold bg-[#2c1220] text-pink-100/90 border border-white/10">
+                        {booking.status}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex flex-col items-end gap-1">
-                    <span className="text-[11px] font-semibold text-pink-100">{row.fee}</span>
-                    <span className="px-2 py-1 rounded-full text-[10px] font-semibold bg-[#2c1220] text-pink-100/90 border border-white/10">
-                      {row.stage}
-                    </span>
-                  </div>
+                ))}
+                {activeBookings.length > 4 && (
+                  <button 
+                    onClick={() => router.push('/client/bookings')}
+                    className="w-full text-xs text-center text-pink-100/80 hover:text-white transition-colors mt-1"
+                  >
+                    View all {activeBookings.length} collaborations
+                  </button>
+                )}
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-3">
+                  <Calendar className="w-6 h-6 text-pink-200/60" />
                 </div>
-              ))}
-            </div>
-
-            <button className="w-full text-xs text-center text-pink-100/80 hover:text-white transition-colors mt-1">
-              View full creator list
-            </button>
+                <p className="text-sm text-pink-100/80">
+                  No active collaborations yet
+                </p>
+              </div>
+            )}
           </GlassCard>
         </section>
       </main>
@@ -286,4 +380,3 @@ export default function ClientDashboardPage() {
     </div>
   )
 }
-

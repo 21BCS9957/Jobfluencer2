@@ -56,9 +56,40 @@ export const reviewSchema = z.object({
   comment: z.string().min(10, 'Comment must be at least 10 characters').optional(),
 })
 
+// Client onboarding validations (simplified - 2 steps)
+export const clientOnboardingSchema = z.object({
+  full_name: z.string().min(2, 'Name must be at least 2 characters'),
+  phone: z.string().min(10, 'Phone number must be at least 10 digits'),
+  city: z.string().min(2, 'City is required'),
+  avatar_url: z.string().optional(),
+  company_name: z.string().min(2, 'Company name is required'),
+  industry: z.string().min(2, 'Industry is required'),
+  website: z.string().url().optional().or(z.literal('')),
+  bio: z.string().min(20, 'Description must be at least 20 characters'),
+})
+
+// Provider onboarding validations
+export const providerOnboardingSchema = z.object({
+  full_name: z.string().min(2, 'Name must be at least 2 characters'),
+  phone: z.string().min(10, 'Phone number must be at least 10 digits'),
+  city: z.string().min(2, 'City is required'),
+  bio: z.string().min(20, 'Bio must be at least 20 characters'),
+  avatar_url: z.string().optional(),
+  categories: z.array(z.string()).min(1, 'Select at least one category'),
+  years_experience: z.string().min(1, 'Experience is required'),
+  hourly_rate: z.number().positive().optional(),
+  daily_rate: z.number().positive().optional(),
+  instagram_url: z.string().url().optional().or(z.literal('')),
+  youtube_url: z.string().url().optional().or(z.literal('')),
+  website_url: z.string().url().optional().or(z.literal('')),
+  portfolio_image_urls: z.array(z.string()).optional(),
+})
+
 export type LoginInput = z.infer<typeof loginSchema>
 export type RegisterInput = z.infer<typeof registerSchema>
 export type ProjectInput = z.infer<typeof projectSchema>
 export type ProviderProfileInput = z.infer<typeof providerProfileSchema>
 export type BookingInput = z.infer<typeof bookingSchema>
 export type ReviewInput = z.infer<typeof reviewSchema>
+export type ClientOnboardingInput = z.infer<typeof clientOnboardingSchema>
+export type ProviderOnboardingInput = z.infer<typeof providerOnboardingSchema>

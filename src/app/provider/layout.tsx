@@ -1,5 +1,4 @@
 import { redirect } from 'next/navigation'
-import { LayoutDashboard, Briefcase, User, FileCheck, DollarSign, MessageSquare, Settings } from 'lucide-react'
 import { Sidebar, SidebarItem } from '@/components/shared/Sidebar'
 import { NotificationBell } from '@/components/shared/NotificationBell'
 import { UserMenu } from '@/components/shared/UserMenu'
@@ -52,19 +51,19 @@ export default async function ProviderLayout({
     : 'bg-red-100 text-red-700'
 
   const sidebarItems: SidebarItem[] = [
-    { name: 'Dashboard', href: '/provider/dashboard', icon: LayoutDashboard },
-    { name: 'Opportunities', href: '/provider/opportunities', icon: Briefcase },
-    { name: 'My Profile', href: '/provider/profile/setup', icon: User },
+    { name: 'Dashboard', href: '/provider/dashboard', icon: 'LayoutDashboard' },
+    { name: 'Opportunities', href: '/provider/opportunities', icon: 'Briefcase' },
+    { name: 'My Profile', href: '/provider/profile/setup', icon: 'User' },
     { 
       name: 'KYC Verification', 
       href: '/provider/kyc', 
-      icon: FileCheck,
+      icon: 'Settings',
       badge: kycBadge,
       badgeColor: kycBadgeColor
     },
-    { name: 'Earnings', href: '/provider/earnings', icon: DollarSign },
-    { name: 'Messages', href: '/provider/messages', icon: MessageSquare },
-    { name: 'Settings', href: '/provider/settings', icon: Settings },
+    { name: 'Earnings', href: '/provider/earnings', icon: 'DollarSign' },
+    { name: 'Messages', href: '/provider/messages', icon: 'MessageSquare' },
+    { name: 'Settings', href: '/provider/settings', icon: 'Settings' },
   ]
 
   return (
